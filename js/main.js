@@ -18,8 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     CLIENT_STATS: [
       { number: 15, prefix: "+", suffix: "", label: "سنة خبرة", sublabel: "في مجال الرخام الطبيعي والصناعي" },
       { number: 500, prefix: "+", suffix: "", label: "مشروع منفذ", sublabel: "في الطائف ومختلف المناطق" },
-      { number: 100, prefix: "", suffix: "%", label: "ضمان على التركيب", sublabel: "التزام كامل بأعلى معايير الجودة" },
-      { number: 0, prefix: "خدمة", suffix: "", label: "توصيل وتركيب", sublabel: "مباشر لجميع أحياء الطائف", isStatic: true }
+      { number: 100, prefix: "", suffix: "%", label: "ضمان على التركيب", sublabel: "التزام كامل بأعلى معايير الجودة" }
     ],
     // تفعيل قسم آراء العملاء (عند توفر تقييمات موثقة من العميل، اجعل القيمة true)
     SHOW_TESTIMONIALS: false, // TODO: set to true when real client reviews are provided
@@ -34,28 +33,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 1. تهيئة التمرير الناعم (Smooth Scroll via Lenis / Native)
+  // 1. تهيئة التمرير الناعم الفاخر (Smooth Scroll via Lenis & GSAP Integration)
   // --------------------------------------------------------------------------
   let lenis = null;
+
+  // تسجيل إضافة ScrollTrigger مع GSAP مبكراً
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+
   if (typeof Lenis !== 'undefined') {
     try {
       lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
+        lerp: 0.1,
         smoothWheel: true,
         wheelMultiplier: 1,
-        touchMultiplier: 1.5,
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
       });
 
-      function raf(time) {
-        lenis.raf(time);
+      // مزامنة حركات ScrollTrigger مع Lenis
+      if (typeof ScrollTrigger !== 'undefined') {
+        lenis.on('scroll', ScrollTrigger.update);
+      }
+
+      // توحيد حلقة التمرير عبر Ticker الخاص بـ GSAP لمنع تعدد حلقات RAF
+      if (typeof gsap !== 'undefined') {
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+      } else {
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
         requestAnimationFrame(raf);
       }
-      requestAnimationFrame(raf);
     } catch (e) {
-      console.warn('Lenis could not be initialized:', e);
+      console.warn('Lenis could not be initialized, falling back to native scroll:', e);
     }
   }
 
@@ -183,14 +199,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { passive: true });
 
   if (backToTopBtn) {
-    backToTopBtn.addEventListener('click', () => {
+    backToTopBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       if (lenis) {
-        lenis.scrollTo(0, { duration: 1.2 });
+        lenis.scrollTo(0, { offset: 0 });
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
   }
+
+  // --------------------------------------------------------------------------
+  // 5.1 روابط التمرير السلس للأقسام (Smooth Anchor Navigation with Lenis Offset)
+  // --------------------------------------------------------------------------
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href');
+      if (targetId && targetId !== '#') {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          e.preventDefault();
+          if (lenis) {
+            lenis.scrollTo(targetElement, { offset: -80 });
+          } else {
+            const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({ top: elementPosition - 80, behavior: 'smooth' });
+          }
+          if (history.pushState) {
+            history.pushState(null, null, targetId);
+          }
+        }
+      }
+    });
+  });
 
   // --------------------------------------------------------------------------
   // 6. القائمة الجانبية في الهاتف (Mobile Navigation Drawer)
@@ -676,6 +717,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const currentScroll = Math.abs(productsTrackContainer.scrollLeft);
       const currentPage = Math.round(currentScroll / cardWidth);
       updateActiveDot(currentPage);
+    }, { passive: true });
+
+    // التأكد من أن التمرير العمودي بعجلة الماوس يمر بحرية لتمرير الصفحة ولا يعلق داخل السلايدر
+    productsTrackContainer.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        // السماح للتمرير العمودي بالتدفق الطبيعي للنافذة ومحرك Lenis
+        return;
+      }
     }, { passive: true });
   }
 
