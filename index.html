@@ -45,33 +45,11 @@
     "alternateName": "Giant of Marble",
     "image": "assets/logo.png",
     "telephone": "+966556339040",
-    "priceRange": "$$$$",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "شارع وادي وج، المنطقة الصناعية",
       "addressLocality": "الطائف",
-      "addressRegion": "منطقة مكة المكرمة",
       "addressCountry": "SA"
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 21.2854,
-      "longitude": 40.4222
-    },
-    "openingHoursSpecification": [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
-        "opens": "08:00",
-        "closes": "22:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Friday"],
-        "opens": "16:00",
-        "closes": "22:00"
-      }
-    ],
     "sameAs": [
       "https://wa.me/966556339040"
     ]
@@ -118,7 +96,7 @@
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          <span>السبت – الخميس: 8:00 ص – 10:00 م</span>
+          <span>تواصل معنا عبر الواتساب</span>
         </div>
       </div>
       <div class="top-bar-actions">
@@ -156,7 +134,7 @@
         <a href="#about" class="nav-link">من نحن</a>
         <a href="#services" class="nav-link">خدماتنا</a>
         <a href="#products" class="nav-link">منتجاتنا</a>
-        <a href="#gallery" class="nav-link">معرض الأعمال</a>
+        <a href="#gallery" class="nav-link">من معرضنا</a>
         <a href="#why-us" class="nav-link">لماذا نحن</a>
         <a href="#contact" class="nav-link">تواصل معنا</a>
       </nav>
@@ -189,7 +167,7 @@
       <a href="#about" class="mobile-nav-link">من نحن</a>
       <a href="#services" class="mobile-nav-link">خدماتنا</a>
       <a href="#products" class="mobile-nav-link">منتجاتنا الحصرية</a>
-      <a href="#gallery" class="mobile-nav-link">معرض المشاريع</a>
+      <a href="#gallery" class="mobile-nav-link">من معرضنا</a>
       <a href="#why-us" class="mobile-nav-link">لماذا نحن</a>
       <a href="#contact" class="mobile-nav-link">تواصل معنا</a>
     </div>
@@ -207,7 +185,8 @@
     <!-- 3) قسم الهيرو (Hero Section) -->
     <section id="hero" class="hero-section">
       <div class="hero-bg-container">
-        <img src="assets/hero-bg.jpg" alt="خلفية رخام فاخرة عملاق الرخام" class="hero-bg-image" />
+        <!-- صورة خلفية الهيرو من صالة العرض الحقيقية مع إمكانية التبديل السهل -->
+        <img src="assets/products/prod-2.jpg" alt="معرض عملاق الرخام في الطائف" class="hero-bg-image" id="heroBgImage" />
         <div class="hero-gradient-overlay"></div>
         <div class="hero-radial-glow"></div>
       </div>
@@ -262,37 +241,38 @@
       </div>
     </section>
 
-    <!-- شريط الإحصائيات مع عداد تفاعلي -->
+    <!-- شريط المزايا ونقاط القوة (Stats / Strengths Strip) -->
     <div class="container">
-      <div class="stats-strip">
-        <div class="stats-grid">
+      <div class="stats-strip" id="statsStrip">
+        <!-- يتم التحكم بالأرقام والإحصائيات من SITE_CONFIG في main.js -->
+        <div class="stats-grid" id="statsGrid">
           <div class="stat-item">
             <div class="stat-number-wrap">
-              <span class="stat-symbol">+</span>
-              <span class="stat-count" data-target="15">0</span>
+              <span class="stat-icon-symbol">📍</span>
+              <span class="stat-main-text">الطائف</span>
             </div>
-            <div class="stat-label">سنة خبرة وتفانٍ</div>
+            <div class="stat-label">الموقع والخدمة الميدانية</div>
           </div>
           <div class="stat-item">
             <div class="stat-number-wrap">
-              <span class="stat-symbol">+</span>
-              <span class="stat-count" data-target="500">0</span>
+              <span class="stat-icon-symbol">📐</span>
+              <span class="stat-main-text">تفصيل حسب الطلب</span>
             </div>
-            <div class="stat-label">مشروع منفذ بنجاح</div>
+            <div class="stat-label">تنفيذ دقيق لكافة المخططات</div>
           </div>
           <div class="stat-item">
             <div class="stat-number-wrap">
-              <span class="stat-symbol">100</span>
-              <span class="stat-symbol">%</span>
+              <span class="stat-icon-symbol">🚚</span>
+              <span class="stat-main-text">توصيل وتركيب</span>
             </div>
-            <div class="stat-label">ضمان جودة وتثبيت آمن</div>
+            <div class="stat-label">خدمة شاملة داخل الطائف</div>
           </div>
           <div class="stat-item">
             <div class="stat-number-wrap">
-              <span class="stat-symbol">✦</span>
-              <span class="stat-label" style="font-size: 1.4rem; font-weight: 700; color: var(--gold-light);">الطائف</span>
+              <span class="stat-icon-symbol">🏛️</span>
+              <span class="stat-main-text">رخام طبيعي وصناعي</span>
             </div>
-            <div class="stat-label">توصيل وتركيب شامل</div>
+            <div class="stat-label">خيارات متنوعة للمنازل والمجالس</div>
           </div>
         </div>
       </div>
@@ -306,10 +286,10 @@
           <div class="about-text-col">
             <div class="section-tag">من نحن</div>
             <h2 class="about-main-tagline">
-              دقة هندسية وذوق رفيع يحولان كتل الرخام الخام إلى تحف معمارية خالدة
+              تفصيل وتشكيل الرخام الطبيعي والصناعي بدقة وعناية تليق بذوقكم
             </h2>
             <p class="about-description">
-              نحن في <strong>عملاق الرخام</strong> نجمع بين أصالة الحجر الطبيعي وأحدث تقنيات القص والتفريز بالكمبيوتر (CNC و ووترجيت). نخدم عملاءنا في مدينة الطائف والمناطق المجاورة بأعلى معايير الإتقان، من توريد أجود بلوكات الرخام الإيطالي والإسباني حتى إتمام التركيب الميكانيكي والعزل الكامل.
+              نحن في <strong>عملاق الرخام</strong> نعمل على تفصيل وتركيب الرخام الطبيعي والصناعي في الطائف حسب مخططات العميل، ونهتم بتقديم حلول متقنة للمغاسل، الطاولات، الدرج، والأسطح المختلفة بمستوى عالٍ من الدقة والاهتمام بأدق التفاصيل.
             </p>
 
             <div class="about-features-list">
@@ -322,8 +302,8 @@
                   </svg>
                 </div>
                 <div class="feature-info">
-                  <h4>انتقاء نخب أول من الرخام</h4>
-                  <p>توريد مباشر لأندر ألواح الكلكتا، الستاتوريو، الترافرتينو، والبوتيتشينو الخالية من الشوائب والتشققات.</p>
+                  <h4>تشكيلات رخام طبيعي وصناعي</h4>
+                  <p>خيارات متعددة تناسب مختلف الأذواق والاستخدامات للمنازل والفلل والمجالس.</p>
                 </div>
               </div>
 
@@ -335,8 +315,8 @@
                   </svg>
                 </div>
                 <div class="feature-info">
-                  <h4>قص وتشكيل بالووترجيت والليزر</h4>
-                  <p>تطابق مذهل للعروق (Bookmatch) وزوايا شلال 45 درجة بدقة المليمتر الواحد.</p>
+                  <h4>تفصيل حسب المقاسات والمخططات</h4>
+                  <p>تنفيذ مخصص بدقة عالية لكل قطعة بما يطابق رغبة العميل وتصميم المساحة.</p>
                 </div>
               </div>
 
@@ -347,14 +327,14 @@
                   </svg>
                 </div>
                 <div class="feature-info">
-                  <h4>طاقم تركيبي معتمد وعزل إيطالي</h4>
-                  <p>تثبيت ميكانيكي آمن ضد الهزات والرطوبة، مع عوازل نانو تحمي الرخام من البقع وتديم بريقه.</p>
+                  <h4>خدمات التوصيل والتركيب بالطائف</h4>
+                  <p>نقل آمن وتثبيت محكم للمغاسل والطاولات والدرج لضمان سلامة واستقرار العمل.</p>
                 </div>
               </div>
             </div>
 
             <a href="#contact" class="btn btn-outline-gold">
-              <span>تحدث مع مهندسنا في الطائف</span>
+              <span>تحدث معنا مباشرة في الطائف</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
@@ -362,15 +342,16 @@
             </a>
           </div>
 
-          <!-- عمود الصورة مع إطار ذهبي وشارة الخبرة -->
+          <!-- عمود الصورة مع إطار ذهبي وشارة الهوية -->
           <div class="about-image-col">
             <div class="about-gold-frame"></div>
             <div class="about-image-wrapper">
-              <img src="assets/about.jpg" alt="صناعة وتفصيل الرخام - عملاق الرخام" loading="lazy" />
+              <!-- صورة من المعرض الحقيقي لعملاق الرخام مع سهولة التبديل -->
+              <img src="assets/products/prod-3.jpg" alt="معرض عملاق الرخام في الطائف" id="aboutImg" loading="lazy" />
             </div>
             <div class="about-experience-badge">
-              <span class="badge-number">15+</span>
-              <span class="badge-label">عاماً من الريادة<br>في تشكيل الرخام</span>
+              <span class="badge-number">✦</span>
+              <span class="badge-label">عملاق الرخام<br>الطائف</span>
             </div>
           </div>
         </div>
@@ -399,7 +380,7 @@
                 تصاميم فندقية حديثة بنظام الشطف المائل والتصريف المخفي، مع حفر الأحواض المصمتة والإنارة السفلية الخافتة.
               </p>
             </div>
-            <a href="#quote-form" class="service-link">
+            <a href="#quote-form" class="service-link" data-service-select="sinks">
               <span>طلب استشارة لهذه الخدمة</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -417,7 +398,7 @@
                 طاولات طعام ملكية وكوفي تيبل مع أسطح مطابخ وكاونترات استقبال بمقاومة فائقة للحرارة والزيوت مع حواف مشطوفة.
               </p>
             </div>
-            <a href="#quote-form" class="service-link">
+            <a href="#quote-form" class="service-link" data-service-select="tables">
               <span>طلب استشارة لهذه الخدمة</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -435,7 +416,7 @@
                 تفصيل دعسات مشطوفة ومجرى ميكانيكي لشرائط LED المخفية، وسلالم دائرية حلزونية للقصور مع نعلات مدمجة محكمة.
               </p>
             </div>
-            <a href="#quote-form" class="service-link">
+            <a href="#quote-form" class="service-link" data-service-select="stairs">
               <span>طلب استشارة لهذه الخدمة</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -453,7 +434,7 @@
                 تنفيذ أدق المخططات الهندسية وجداريات البوكماتش المتطابقة وزخارف الووترجيت المعقدة بما يطابق رؤية المصمم الداخلي.
               </p>
             </div>
-            <a href="#quote-form" class="service-link">
+            <a href="#quote-form" class="service-link" data-service-select="custom">
               <span>طلب استشارة لهذه الخدمة</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -477,15 +458,8 @@
           </p>
         </div>
 
-        <!-- أزرار التصفية (Filter Tabs) -->
-        <div class="filter-tabs">
-          <button type="button" class="filter-btn active" data-filter="all">الكل</button>
-          <button type="button" class="filter-btn" data-filter="sinks">مغاسل</button>
-          <button type="button" class="filter-btn" data-filter="tables">طاولات</button>
-          <button type="button" class="filter-btn" data-filter="stairs">درج</button>
-          <button type="button" class="filter-btn" data-filter="kitchens">أسطح مطابخ</button>
-          <button type="button" class="filter-btn" data-filter="cladding">كسوات جدارية</button>
-        </div>
+        <!-- أزرار التصفية (Filter Tabs) - تولد ديناميكياً من الفئات الموجودة فعلياً في products.js -->
+        <div class="filter-tabs" id="filterTabsContainer"></div>
 
         <!-- حاوية السلايدر المتطورة -->
         <div class="products-slider-wrapper">
@@ -518,70 +492,70 @@
       </div>
     </section>
 
-    <!-- 7) معرض الأعمال والمشاريع المنفذة (Portfolio Section) -->
+    <!-- 7) من معرضنا (Gallery Section) -->
     <section id="gallery" class="section gallery-section">
       <div class="container">
         <div class="section-header">
-          <div class="section-tag">شواهد الجودة</div>
-          <h2 class="section-title">معرض مشاريعنا المنفذة</h2>
+          <div class="section-tag">تشكيلاتنا</div>
+          <h2 class="section-title">من معرضنا</h2>
           <div class="section-line"></div>
           <p class="section-subtitle">
-            لقطات من أرقى الفلل والقصور والمشاريع الراقية التي تشرفنا بتنفيذها في مدينة الطائف وضواحيها.
+            نماذج وتشكيلات واقعية من معروضات الرخام والترافرتين في صالة عرض عملاق الرخام بالطائف.
           </p>
         </div>
 
         <div class="gallery-grid">
-          <!-- مشروع 1 -->
-          <div class="gallery-item span-2" data-full-image="assets/gallery/gallery-1.jpg">
-            <img src="assets/gallery/gallery-1.jpg" alt="فيلا سكنية فاخرة - حي الردف الطائف" loading="lazy" />
+          <!-- نموذج 1 -->
+          <div class="gallery-item span-2" data-full-image="assets/products/prod-1.jpg">
+            <img src="assets/products/prod-1.jpg" alt="مغسلة بيضاء معلقة بحوضين ذهبيين ورف سفلي" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">فلل خاصة • الطائف</span>
-              <h3 class="gallery-title">سلم رخامي منحني مع تشطيب كلكتا إيطالي</h3>
+              <span class="gallery-tag">مغاسل رخامية</span>
+              <h3 class="gallery-title">مغسلة بيضاء معلقة بحوضين ذهبيين ورف سفلي</h3>
             </div>
           </div>
 
-          <!-- مشروع 2 -->
-          <div class="gallery-item" data-full-image="assets/gallery/gallery-2.jpg">
-            <img src="assets/gallery/gallery-2.jpg" alt="جدار رخام بوكماتش مجلس رجال VIP" loading="lazy" />
+          <!-- نموذج 2 -->
+          <div class="gallery-item" data-full-image="assets/products/prod-2.jpg">
+            <img src="assets/products/prod-2.jpg" alt="مغسلة ترافرتين رمادي بإنارة LED دافئة" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">مجالس VIP • شهار</span>
-              <h3 class="gallery-title">جدارية بوكماتش عروق متطابقة</h3>
+              <span class="gallery-tag">مغاسل ترافرتين</span>
+              <h3 class="gallery-title">مغسلة ترافرتين رمادي معلقة بإنارة LED دافئة</h3>
             </div>
           </div>
 
-          <!-- مشروع 3 -->
-          <div class="gallery-item" data-full-image="assets/gallery/gallery-3.jpg">
-            <img src="assets/gallery/gallery-3.jpg" alt="مغاسل ضيوف رئيسية معلقة" loading="lazy" />
+          <!-- نموذج 3 -->
+          <div class="gallery-item" data-full-image="assets/products/prod-3.jpg">
+            <img src="assets/products/prod-3.jpg" alt="مغسلة عمودية مستقلة بتطعيم مضيء" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">مغاسل ضيوف • الهدا</span>
-              <h3 class="gallery-title">مغاسل رخام مصمت مع شلال متصل</h3>
+              <span class="gallery-tag">مغاسل قائمة</span>
+              <h3 class="gallery-title">مغسلة عمودية مستقلة بتطعيم أسود مضيء</h3>
             </div>
           </div>
 
-          <!-- مشروع 4 -->
-          <div class="gallery-item" data-full-image="assets/gallery/gallery-4.jpg">
-            <img src="assets/gallery/gallery-4.jpg" alt="صالة استقبال رئيسية - أرضيات رخام إيطالي" loading="lazy" />
+          <!-- نموذج 4 -->
+          <div class="gallery-item" data-full-image="assets/products/prod-4.jpg">
+            <img src="assets/products/prod-4.jpg" alt="كاونتر مغسلة بتطعيم متعرج وحوضين باللون الأسود" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">صالات استقبال • قصر خاص</span>
-              <h3 class="gallery-title">أرضيات رخامية بتداخلات هندسية دقيقة</h3>
+              <span class="gallery-tag">مغاسل مودرن</span>
+              <h3 class="gallery-title">كاونتر مغسلة رمادي بتطعيم هندسي وحوضين باللون الأسود</h3>
             </div>
           </div>
 
-          <!-- مشروع 5 -->
-          <div class="gallery-item span-2" data-full-image="assets/gallery/gallery-5.jpg">
-            <img src="assets/gallery/gallery-5.jpg" alt="جزيرة مطبخ رخام ستاتوريو" loading="lazy" />
+          <!-- نموذج 5 -->
+          <div class="gallery-item span-2" data-full-image="assets/products/prod-5.jpg">
+            <img src="assets/products/prod-5.jpg" alt="طقم طاولتي ضيافة رخام عنابي داكن منخفض" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">مطابخ مودرن • الطائف</span>
-              <h3 class="gallery-title">جزيرة مطبخ بشلال مزدوج معالجة بالنانو</h3>
+              <span class="gallery-tag">طاولات رخام</span>
+              <h3 class="gallery-title">طقم طاولتي ضيافة من الرخام العنابي الداكن المصقول</h3>
             </div>
           </div>
 
-          <!-- مشروع 6 -->
-          <div class="gallery-item" data-full-image="assets/gallery/gallery-6.jpg">
-            <img src="assets/gallery/gallery-6.jpg" alt="تكسيات ترافرتينو لمداخل وممرات خارجية" loading="lazy" />
+          <!-- نموذج 6 -->
+          <div class="gallery-item" data-full-image="assets/products/prod-6.jpg">
+            <img src="assets/products/prod-6.jpg" alt="طاولة طعام بيضاوية من الترافرتين الفضي" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">مداخل خارجية • الطائف</span>
-              <h3 class="gallery-title">كسوات حجر ترافرتينو روماني معالج</h3>
+              <span class="gallery-tag">طاولات ترافرتين</span>
+              <h3 class="gallery-title">طاولة طعام بيضاوية من الترافرتين الفضي بقاعدة مضلعة</h3>
             </div>
           </div>
         </div>
@@ -608,9 +582,9 @@
                 <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
               </svg>
             </div>
-            <h3 class="why-title">أسعار المصنع المباشرة</h3>
+            <h3 class="why-title">أسعار مناسبة وتفصيل مباشر</h3>
             <p class="why-desc">
-              نستورد بلوكات وألواح الرخام مباشرة من مقالع إيطاليا وإسبانيا، ونفصلها في مصنعنا دون وسطاء لنوفر لك أعلى جودة بأفضل سعر تنافسي.
+              تفصيل وتصنيع مباشر في ورشتنا لنوفر لك أفضل الأسعار التنافسية بدون وسطاء، مع الحرص على جودة الحجر ودقة القص.
             </p>
           </div>
 
@@ -622,9 +596,9 @@
                 <polyline points="2 12 12 17 22 12"></polyline>
               </svg>
             </div>
-            <h3 class="why-title">تصميم 3D قبل التنفيذ</h3>
+            <h3 class="why-title">تنسيق وتخطيط قبل التنفيذ</h3>
             <p class="why-desc">
-              نعاين موقعك ونقدم لك نموذجاً ثلاثي الأبعاد يوضح مسار العروق وتفاصيل المغاسل والدرج، لتتأكد من شكل النتيجة النهائية قبل بدء القص.
+              نراجع المقاسات وننسق توزيع الألواح والعروق لتتوافق بدقة مع رغبة العميل والمخطط المعماري قبل بدء القص.
             </p>
           </div>
 
@@ -639,7 +613,7 @@
             </div>
             <h3 class="why-title">توصيل وتركيب بالطائف</h3>
             <p class="why-desc">
-              أسطول نقل مجهز وسيارات مغلقة لحماية الرخام، مع فنيين متخصصين ومحترفين في التركيب السكني والمشاريع الكبرى داخل الطائف وضواحيها.
+              توصيل سليم للموقع وتثبيت محكم للمغاسل والطاولات والدرج في كافة أحياء مدينة الطائف وضواحيها.
             </p>
           </div>
 
@@ -649,69 +623,30 @@
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
               </svg>
             </div>
-            <h3 class="why-title">ضمان حقيقي وتثبيت آمن</h3>
+            <h3 class="why-title">عناية بالتركيب وثبات آمن</h3>
             <p class="why-desc">
-              اعتماد أفضل أنظمة التثبيت الميكانيكي ومواد اللصق الإيبوكسي المقاومة للحرارة والرطوبة، مع ضمان حقيقي على التماسك وجودة الصقل.
+              نولي عملية التثبيت والتسليم عناية فائقة لضمان سلامة القطع الرخامية واستقرارها ومتانتها لسنوات طويلة.
             </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 9) قسم آراء العملاء (Testimonials Section) -->
-    <section class="section testimonials-section">
+    <!-- 9) قسم آراء العملاء (مخفي افتراضياً لحين تزويدنا بآراء وتوصيات حقيقية من العميل) -->
+    <!-- TODO: Enable SHOW_TESTIMONIALS in main.js once real reviews are provided -->
+    <section id="testimonials" class="section testimonials-section" style="display: none;">
       <div class="container">
         <div class="section-header">
-          <div class="section-tag">تجارب حقيقية</div>
-          <h2 class="section-title">آراء عملائنا في الطائف</h2>
+          <div class="section-tag">آراء العملاء</div>
+          <h2 class="section-title">ماذا يقول عملاؤنا في الطائف</h2>
           <div class="section-line"></div>
           <p class="section-subtitle">
-            ثقة نعتز بها ومشاريع نفخر بكوننا جزءاً من نجاحها المعماري
+            تجارب حقيقية لعملاء تم خدمتهم في تفصيل وتركيب الرخام.
           </p>
         </div>
 
-        <div class="testimonials-grid">
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-quote">
-              "تم تنفيذ مغاسل مجلس الرجال في فيلتنا بحي الردف من رخام كلكتا غولد. العمل كان في غاية الإتقان، دقة القص عند زوايا الشلال وتوزيع الإضاءة المخفية أذهلت كل من زارنا."
-            </p>
-            <div class="client-info">
-              <div class="client-avatar">م.ع</div>
-              <div>
-                <div class="client-name">أبو فهد العتيبي</div>
-                <div class="client-location">حي الردف – الطائف</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-quote">
-              "تعاملت مع عملاق الرخام في تفصيل درج القصر وجدارية التلفزيون بوكماتش. الالتزام بالوقت والمخططات 3D كان استثنائياً وسرعة التركيب النظيف أسعدتني جداً."
-            </p>
-            <div class="client-info">
-              <div class="client-avatar">س.ق</div>
-              <div>
-                <div class="client-name">المهندس سلطان القرشي</div>
-                <div class="client-location">حي شهار – الطائف</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="testimonial-card">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-quote">
-              "طاولة الطعام من رخام الإمبيرادور صُنعت خصيصاً لمجلس الضيوف بأبعاد خاصة. جودة العزل والصقل البلوري جعلت منها تحفة فنية لا تُقدر بثمن. شكراً لفريق عملاق الرخام."
-            </p>
-            <div class="client-info">
-              <div class="client-avatar">خ.ث</div>
-              <div>
-                <div class="client-name">خالد بن عبدالمحسن الثبيتي</div>
-                <div class="client-location">الهدا – الطائف</div>
-              </div>
-            </div>
-          </div>
+        <div class="testimonials-grid" id="testimonialsGrid">
+          <!-- TODO: يتم تفعيل البطاقات بآراء العملاء الحقيقية عند توفرها -->
         </div>
       </div>
     </section>
@@ -765,7 +700,7 @@
               </div>
               <div class="contact-card-text">
                 <h4>الموقع والمعرض</h4>
-                <p>المملكة العربية السعودية، الطائف، شارع وادي وج – المنطقة الصناعية المركزية</p>
+                <p>المملكة العربية السعودية، الطائف (تواصل معنا للتنسيق وتحديد موقع المعرض والورشة)</p>
               </div>
             </div>
 
@@ -790,9 +725,8 @@
                 </svg>
               </div>
               <div class="contact-card-text">
-                <h4>ساعات العمل</h4>
-                <p>السبت – الخميس: 8:00 صباحاً – 10:00 مساءً</p>
-                <p>الجمعة: 4:00 عصراً – 10:00 مساءً</p>
+                <h4>أوقات التواصل والخدمة</h4>
+                <p>تواصل معنا عبر الواتساب في أي وقت لمتابعة طلبك والتنسيق المباشر.</p>
               </div>
             </div>
 
@@ -880,7 +814,7 @@
           </div>
         </div>
         <p class="footer-about-text">
-          مصنع وورشة متخصصة في تفصيل وتشكيل الرخام الطبيعي والصناعي في مدينة الطائف، نصنع تحفاً معمارية تجمع بين الفخامة والأصالة وندرة المواد الإيطالية والإسبانية.
+          مؤسسة متخصصة في تفصيل وتشكيل الرخام الطبيعي والصناعي في مدينة الطائف، ننفذ تصاميم راقية تجمع بين الإتقان والجمال بدقة تناسب مختلف الأذواق والمخططات.
         </p>
         <div class="footer-socials">
           <a href="https://wa.me/966556339040" target="_blank" rel="noopener noreferrer" class="social-link" title="واتساب">
@@ -904,7 +838,7 @@
           <a href="#about">من نحن</a>
           <a href="#services">خدماتنا</a>
           <a href="#products">المنتجات الحصرية</a>
-          <a href="#gallery">معرض الأعمال</a>
+          <a href="#gallery">من معرضنا</a>
           <a href="#why-us">لماذا تختارنا</a>
           <a href="#contact">طلب تسعيرة</a>
         </div>
@@ -915,11 +849,9 @@
         <h4 class="footer-col-title">خدمات الرخام</h4>
         <div class="footer-links-list">
           <a href="#services">المغاسل والأحواض الرخامية</a>
-          <a href="#services">طاولات الطعام والمجالس</a>
-          <a href="#services">درج وسلالم رخامية بإضاءة</a>
-          <a href="#services">أسطح وجزر المطابخ</a>
-          <a href="#services">جدران بوكماتش عروق متقابلة</a>
-          <a href="#services">قص ووترجيت حسب المخططات</a>
+          <a href="#services">الطاولات والأسطح الرخامية</a>
+          <a href="#services">الدرج والسلالم الرخامية</a>
+          <a href="#services">القص والتفصيل حسب المخططات</a>
         </div>
       </div>
 
@@ -932,7 +864,7 @@
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span>الطائف، المملكة العربية السعودية – شارع وادي وج</span>
+            <span>الطائف، المملكة العربية السعودية</span>
           </div>
           <div class="footer-contact-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
@@ -945,7 +877,7 @@
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
-            <span>خدمة العملاء: 8 ص – 10 م</span>
+            <span>خدمة العملاء: تواصل واستفسار عبر الواتساب</span>
           </div>
         </div>
       </div>

@@ -6,6 +6,33 @@
 document.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
+  // ==========================================================================
+  // إعدادات الموقع وتخصيص البيانات (Site Configuration)
+  // --------------------------------------------------------------------------
+  // TODO: استبدال أرقام الإحصائيات بأرقام العميل الحقيقية عند تأكيدها.
+  // TODO: Replace with the client's real numbers when confirmed.
+  // ==========================================================================
+  const SITE_CONFIG = {
+    // تفعيل عرض الأرقام والإحصائيات (عند تأكيدها من قبل العميل، اجعل القيمة true)
+    ENABLE_NUMERICAL_STATS: false, // TODO: set to true when client confirms real numbers
+    CLIENT_STATS: [
+      { number: 15, prefix: "+", suffix: "", label: "سنة خبرة", sublabel: "في مجال الرخام الطبيعي والصناعي" },
+      { number: 500, prefix: "+", suffix: "", label: "مشروع منفذ", sublabel: "في الطائف ومختلف المناطق" },
+      { number: 100, prefix: "", suffix: "%", label: "ضمان على التركيب", sublabel: "التزام كامل بأعلى معايير الجودة" },
+      { number: 0, prefix: "خدمة", suffix: "", label: "توصيل وتركيب", sublabel: "مباشر لجميع أحياء الطائف", isStatic: true }
+    ],
+    // تفعيل قسم آراء العملاء (عند توفر تقييمات موثقة من العميل، اجعل القيمة true)
+    SHOW_TESTIMONIALS: false, // TODO: set to true when real client reviews are provided
+    HERO_IMAGE: 'assets/products/prod-2.jpg',
+    ABOUT_IMAGE: 'assets/products/prod-3.jpg'
+  };
+
+  // التحكم بظهور قسم آراء العملاء وفقاً لإعدادات التكوين
+  const testimonialsSection = document.getElementById('testimonials');
+  if (testimonialsSection) {
+    testimonialsSection.style.display = SITE_CONFIG.SHOW_TESTIMONIALS ? '' : 'none';
+  }
+
   // --------------------------------------------------------------------------
   // 1. تهيئة التمرير الناعم (Smooth Scroll via Lenis / Native)
   // --------------------------------------------------------------------------
@@ -370,44 +397,73 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 9. عداد الأرقام والإحصائيات (Count-up Animation)
+  // 9. إدارة شريط الإحصائيات والمزايا (Stats Strip & Optional Counters)
   // --------------------------------------------------------------------------
-  const statNumbers = document.querySelectorAll('.stat-count');
-  let statsCounted = false;
-
-  const countUpNumbers = () => {
-    statNumbers.forEach((counter) => {
-      const target = +counter.getAttribute('data-target');
-      const duration = 2000;
-      const stepTime = 20;
-      const totalSteps = duration / stepTime;
-      const increment = target / totalSteps;
-      let current = 0;
-
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-          counter.textContent = target;
-          clearInterval(timer);
-        } else {
-          counter.textContent = Math.ceil(current);
-        }
-      }, stepTime);
-    });
-  };
-
+  const statsGrid = document.getElementById('statsGrid');
   const statsSection = document.querySelector('.stats-strip');
-  if (statsSection) {
-    const statsObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && !statsCounted) {
-          statsCounted = true;
-          countUpNumbers();
-          observer.unobserve(entry.target);
-        }
+
+  if (SITE_CONFIG.ENABLE_NUMERICAL_STATS && statsGrid) {
+    // في حال تفعيل الأرقام الحقيقية المعتمدة من العميل، نقوم بتوليد بطاقات الأرقام
+    statsGrid.innerHTML = SITE_CONFIG.CLIENT_STATS.map(stat => {
+      if (stat.isStatic) {
+        return `
+          <div class="stat-item">
+            <div class="stat-number-wrap">
+              <span class="stat-prefix">${stat.prefix}</span>
+              <span class="stat-main-text">${stat.label}</span>
+            </div>
+            <div class="stat-label">${stat.sublabel}</div>
+          </div>
+        `;
+      }
+      return `
+        <div class="stat-item">
+          <div class="stat-number-wrap">
+            ${stat.prefix ? `<span class="stat-prefix">${stat.prefix}</span>` : ''}
+            <span class="stat-count" data-target="${stat.number}">0</span>
+            ${stat.suffix ? `<span class="stat-suffix">${stat.suffix}</span>` : ''}
+          </div>
+          <div class="stat-label">${stat.label}</div>
+        </div>
+      `;
+    }).join('');
+
+    const statNumbers = statsGrid.querySelectorAll('.stat-count');
+    let statsCounted = false;
+
+    const countUpNumbers = () => {
+      statNumbers.forEach((counter) => {
+        const target = +counter.getAttribute('data-target');
+        const duration = 2000;
+        const stepTime = 20;
+        const totalSteps = duration / stepTime;
+        const increment = target / totalSteps;
+        let current = 0;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = target;
+            clearInterval(timer);
+          } else {
+            counter.textContent = Math.ceil(current);
+          }
+        }, stepTime);
       });
-    }, { threshold: 0.3 });
-    statsObserver.observe(statsSection);
+    };
+
+    if (statsSection) {
+      const statsObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !statsCounted) {
+            statsCounted = true;
+            countUpNumbers();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      statsObserver.observe(statsSection);
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -415,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   const productsTrack = document.getElementById('productsTrack');
   const productsTrackContainer = document.querySelector('.products-track-container');
-  const filterButtons = document.querySelectorAll('.filter-btn');
+  const filterTabsContainer = document.getElementById('filterTabsContainer');
   const sliderPrevBtn = document.getElementById('sliderPrevBtn');
   const sliderNextBtn = document.getElementById('sliderNextBtn');
   const sliderDotsContainer = document.getElementById('sliderDots');
@@ -423,14 +479,62 @@ document.addEventListener('DOMContentLoaded', () => {
   let activeCategory = 'all';
   let displayedProducts = [];
 
+  // قاموس الفئات المعتمدة باللغة العربية
+  const categoryDictionary = {
+    sinks: 'مغاسل',
+    tables: 'طاولات',
+    stairs: 'درج',
+    kitchens: 'أسطح مطابخ',
+    cladding: 'كسوات جدارية',
+    custom: 'قص وتفصيل مخصص',
+    other: 'أخرى'
+  };
+
+  // توليد أزرار التصفية ديناميكياً بناءً على المنتجات المتوفرة فعلياً
+  function renderFilterTabs() {
+    if (!filterTabsContainer || !window.marbleProducts) return;
+
+    // استخراج الفئات الموجودة فعلياً في المنتجات
+    const activeCategories = [];
+    window.marbleProducts.forEach(p => {
+      if (p.category && !activeCategories.includes(p.category)) {
+        activeCategories.push(p.category);
+      }
+    });
+
+    let tabsHTML = `<button type="button" class="filter-btn active" data-filter="all">الكل (${window.marbleProducts.length})</button>`;
+
+    activeCategories.forEach(cat => {
+      const label = categoryDictionary[cat] || cat;
+      const count = window.marbleProducts.filter(p => p.category === cat).length;
+      tabsHTML += `<button type="button" class="filter-btn" data-filter="${cat}">${label} (${count})</button>`;
+    });
+
+    filterTabsContainer.innerHTML = tabsHTML;
+
+    // ربط مستمعات النقر للتبويبات المنشأة
+    const tabButtons = filterTabsContainer.querySelectorAll('.filter-btn');
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeCategory = btn.getAttribute('data-filter');
+        renderProducts(activeCategory);
+      });
+    });
+  }
+
   // دالة توليد بطاقة المنتج
   function createProductCardHTML(product) {
-    const whatsappQuoteText = encodeURIComponent(`السلام عليكم عملاق الرخام، أود الاستفسار وطلب تسعيرة لمنتج: ${product.name} (${product.marbleType})`);
+    const whatsappQuoteText = encodeURIComponent(product.whatsappMessage || `السلام عليكم عملاق الرخام، أود الاستفسار وطلب تسعيرة لمنتج: ${product.name}`);
+    const badgeText = product.marbleBadge || product.marbleType || 'رخام طبيعي فاخر';
+    const focusStyle = product.focus ? `style="object-position: ${product.focus};"` : '';
+
     return `
       <div class="product-card" data-category="${product.category}" data-id="${product.id}">
         <div class="product-image-container">
-          <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" />
-          <span class="marble-badge">${product.marbleType}</span>
+          <img src="${product.image}" alt="${product.name}" class="product-img" loading="lazy" ${focusStyle} />
+          <span class="marble-badge">${badgeText}</span>
         </div>
         <div class="product-body">
           <h3 class="product-title">${product.name}</h3>
@@ -476,19 +580,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 220);
   }
 
-  // إعداد تبويبات التصفية
-  filterButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeCategory = btn.getAttribute('data-filter');
-      renderProducts(activeCategory);
-    });
-  });
-
   // نقاط السلايدر (Pagination Dots)
   function renderSliderDots() {
-    if (!sliderDotsContainer) return;
+    if (!sliderDotsContainer || !productsTrackContainer) return;
     sliderDotsContainer.innerHTML = '';
     const cards = productsTrack.querySelectorAll('.product-card');
     if (!cards.length) return;
@@ -497,6 +591,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardWidth = cards[0].offsetWidth + 28;
     const visibleCards = Math.max(1, Math.round(productsTrackContainer.offsetWidth / cardWidth));
     const totalPages = Math.max(1, cards.length - visibleCards + 1);
+
+    if (totalPages <= 1) {
+      return;
+    }
 
     for (let i = 0; i < totalPages; i++) {
       const dot = document.createElement('span');
@@ -525,7 +623,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // تحكم الأسهم في السلايدر مع مراعاة اتجاه الـ RTL
-  // في الـ RTL: السهم الأيمن ينقل للسابق، والسهم الأيسر ينقل للتالي
   if (sliderPrevBtn && productsTrackContainer) {
     sliderPrevBtn.addEventListener('click', () => {
       const scrollStep = productsTrackContainer.offsetWidth * 0.75;
@@ -611,7 +708,8 @@ document.addEventListener('DOMContentLoaded', () => {
     productsTrackContainer.addEventListener('touchend', startAutoplay, { passive: true });
   }
 
-  // الرندرة الأولية للمنتجات
+  // تهيئة تبويبات التصفية والرندرة الأولية للمنتجات
+  renderFilterTabs();
   renderProducts('all');
 
   // --------------------------------------------------------------------------
@@ -645,7 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // تعبئة البيانات
     modalTitle.textContent = product.name;
-    modalBadge.textContent = product.marbleType;
+    modalBadge.textContent = product.marbleBadge || product.marbleType || 'رخام طبيعي';
     modalDesc.textContent = product.fullDesc;
     modalMainImg.src = product.image;
     modalMainImg.alt = product.name;
@@ -665,32 +763,32 @@ document.addEventListener('DOMContentLoaded', () => {
       modalThumbnails.appendChild(thumb);
     });
 
-    // جدول المواصفات
+    // جدول المواصفات (المقاسات والسماكة حسب الطلب)
     modalSpecsTable.innerHTML = `
       <div class="spec-row">
         <span class="spec-label">الخامة والنوع:</span>
-        <span class="spec-value">${product.specs.material}</span>
+        <span class="spec-value">${product.specs.material || product.marbleBadge}</span>
       </div>
       <div class="spec-row">
-        <span class="spec-label">السماكة والأبعاد:</span>
-        <span class="spec-value">${product.specs.thickness}</span>
+        <span class="spec-label">السماكة والمقاسات:</span>
+        <span class="spec-value">${product.specs.thickness || product.specs.dimensions || 'السماكة والمقاسات حسب الطلب'}</span>
       </div>
       <div class="spec-row">
         <span class="spec-label">نوع التشطيب:</span>
-        <span class="spec-value">${product.specs.finish}</span>
+        <span class="spec-value">${product.specs.finish || 'صقل ناعم مع معالجة عازلة'}</span>
       </div>
       <div class="spec-row">
         <span class="spec-label">الاستخدام المقترح:</span>
-        <span class="spec-value">${product.specs.suggestedUse}</span>
+        <span class="spec-value">${product.specs.suggestedUse || 'المجالس، الصالات، والفلل الفاخرة'}</span>
       </div>
       <div class="spec-row">
-        <span class="spec-label">بلد المنشأ:</span>
-        <span class="spec-value">${product.specs.origin}</span>
+        <span class="spec-label">التفصيل والتنفيذ:</span>
+        <span class="spec-value">حسب المخططات الهندسية بدقة</span>
       </div>
     `;
 
-    // زر الواتساب الخاص بالمنتج
-    const whatsappText = encodeURIComponent(`السلام عليكم عملاق الرخام، أود الاستفسار وطلب تسعيرة لمنتج: ${product.name} مع المواصفات.`);
+    // زر الواتساب الخاص بالمنتج بالاسم الدقيق
+    const whatsappText = encodeURIComponent(product.whatsappMessage || `السلام عليكم عملاق الرخام، أود الاستفسار وطلب تسعيرة لمنتج: ${product.name}`);
     modalWhatsappBtn.href = `https://wa.me/966556339040?text=${whatsappText}`;
 
     productModal.classList.add('open');
@@ -885,6 +983,19 @@ ${notes}
   formInputs.forEach((input) => {
     input.addEventListener('input', () => clearFieldError(input));
     input.addEventListener('change', () => clearFieldError(input));
+  });
+
+  // ربط روابط بطاقات الخدمات بنموذج التسعيرة مع التحديد التلقائي للخدمة
+  const serviceLinks = document.querySelectorAll('.service-link[data-service-select]');
+  const serviceTypeSelect = document.getElementById('serviceType');
+  serviceLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const selectedService = link.getAttribute('data-service-select');
+      if (serviceTypeSelect && selectedService) {
+        serviceTypeSelect.value = selectedService;
+        clearFieldError(serviceTypeSelect);
+      }
+    });
   });
 
 });
