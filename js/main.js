@@ -373,20 +373,61 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
 
-    // حركة بطاقات الخدمات المتتالية (Stagger)
-    const serviceCards = document.querySelectorAll('.service-card');
-    if (serviceCards.length) {
-      gsap.from(serviceCards, {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: 'power3.out',
+    // حركة قسم الخدمات: إظهار البطاقة العريضة أولاً، ثم تتابع الشرائح (0.06s)، ثم البطاقات السفلية (0.12s)
+    const featuredCard = document.querySelector('.service-card.featured-service-card');
+    const serviceChips = document.querySelectorAll('.service-chip');
+    const lowerCards = document.querySelectorAll('.services-grid > .service-card:not(.featured-service-card)');
+
+    if (featuredCard) {
+      const servicesTl = gsap.timeline({
         scrollTrigger: {
           trigger: '.services-grid',
           start: 'top 80%',
         }
       });
+
+      servicesTl.from(featuredCard, {
+        y: 35,
+        opacity: 0,
+        duration: 0.65,
+        ease: 'power3.out',
+      });
+
+      if (serviceChips.length) {
+        servicesTl.from(serviceChips, {
+          scale: 0.9,
+          opacity: 0,
+          y: 12,
+          duration: 0.4,
+          stagger: 0.06,
+          ease: 'back.out(1.4)',
+        }, '-=0.25');
+      }
+
+      if (lowerCards.length) {
+        servicesTl.from(lowerCards, {
+          y: 35,
+          opacity: 0,
+          duration: 0.65,
+          stagger: 0.12,
+          ease: 'power3.out',
+        }, '-=0.2');
+      }
+    } else {
+      const serviceCards = document.querySelectorAll('.service-card');
+      if (serviceCards.length) {
+        gsap.from(serviceCards, {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.services-grid',
+            start: 'top 80%',
+          }
+        });
+      }
     }
 
     // حركة بطاقات لماذا نحن المتتالية
@@ -565,9 +606,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // دالة مساعدة لتوليد رسالة طلب تسعيرة المنتج بدون إيموجي
+  function getProductWhatsappText(product) {
+    if (product.whatsappMessage) {
+      return encodeURIComponent(product.whatsappMessage);
+    }
+    const categoryName = product.categoryAr || (product.category === 'sinks' ? 'مغاسل' : 'طاولات');
+    const lines = [
+      "*طلب تسعيرة - عملاق الرخام*",
+      `المنتج: ${product.name}`,
+      `الفئة: ${categoryName}`,
+      "أرجو التواصل معي بخصوص التسعير والتفاصيل."
+    ];
+    return encodeURIComponent(lines.join('\n'));
+  }
+
   // دالة توليد بطاقة المنتج
   function createProductCardHTML(product) {
-    const whatsappQuoteText = encodeURIComponent(product.whatsappMessage || `السلام عليكم عملاق الرخام، أود الاستفسار وطلب تسعيرة لمنتج: ${product.name}`);
+    const whatsappQuoteText = getProductWhatsappText(product);
     const badgeText = product.marbleBadge || product.marbleType || 'رخام طبيعي فاخر';
     const focusStyle = product.focus ? `style="object-position: ${product.focus};"` : '';
 
@@ -837,7 +893,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     // زر الواتساب الخاص بالمنتج بالاسم الدقيق
-    const whatsappText = encodeURIComponent(product.whatsappMessage || `السلام عليكم عملاق الرخام، أود الاستفسار وطلب تسعيرة لمنتج: ${product.name}`);
+    const whatsappText = getProductWhatsappText(product);
     modalWhatsappBtn.href = `https://wa.me/966556339040?text=${whatsappText}`;
 
     productModal.classList.add('open');
@@ -848,6 +904,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (productModal) {
       productModal.classList.remove('open');
       document.body.style.overflow = '';
+      if (modalMainImg) {
+        modalMainImg.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
+      }
     }
   }
 
@@ -897,6 +956,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (lightboxModal) {
       lightboxModal.classList.remove('open');
       document.body.style.overflow = '';
+      if (lightboxImage) {
+        lightboxImage.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E";
+      }
     }
   }
 
@@ -938,7 +1000,136 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 13. معالجة نموذج طلب التصميم والتسعيرة عبر الواتساب
+  // 13. القائمة المنسدلة المخصصة لخدمات الرخام (Custom Dropdown)
+  // --------------------------------------------------------------------------
+  const customSelectWrapper = document.getElementById('customSelectWrapper');
+  const customSelectTrigger = document.getElementById('customSelectTrigger');
+  const customSelectLabel = document.getElementById('customSelectLabel');
+  const customSelectOptions = document.getElementById('customSelectOptions');
+  const serviceTypeSelect = document.getElementById('serviceType');
+  const customOptions = document.querySelectorAll('.custom-option');
+
+  function updateCustomDropdown(value) {
+    if (!serviceTypeSelect) return;
+    serviceTypeSelect.value = value;
+
+    let matchedOption = null;
+    customOptions.forEach(opt => {
+      const optVal = opt.getAttribute('data-value');
+      if (optVal === value) {
+        opt.classList.add('selected');
+        opt.setAttribute('aria-selected', 'true');
+        matchedOption = opt;
+      } else {
+        opt.classList.remove('selected');
+        opt.setAttribute('aria-selected', 'false');
+      }
+    });
+
+    if (matchedOption && value !== '') {
+      const optText = matchedOption.querySelector('.option-text')?.textContent || '';
+      if (customSelectLabel) customSelectLabel.textContent = optText;
+      if (customSelectTrigger) customSelectTrigger.classList.add('has-value');
+    } else {
+      const defaultOpt = document.querySelector('.custom-option[data-value=""]');
+      const defaultText = defaultOpt?.querySelector('.option-text')?.textContent || 'اختر الخدمة المطلوبة...';
+      if (customSelectLabel) customSelectLabel.textContent = defaultText;
+      if (customSelectTrigger) customSelectTrigger.classList.remove('has-value');
+    }
+
+    clearFieldError(serviceTypeSelect);
+  }
+
+  function closeCustomSelect() {
+    if (customSelectWrapper) {
+      customSelectWrapper.classList.remove('open');
+      customSelectTrigger?.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  function openCustomSelect() {
+    if (customSelectWrapper) {
+      customSelectWrapper.classList.add('open');
+      customSelectTrigger?.setAttribute('aria-expanded', 'true');
+      const selectedOpt = customSelectOptions?.querySelector('.custom-option.selected') || customOptions[0];
+      selectedOpt?.focus();
+    }
+  }
+
+  function toggleCustomSelect() {
+    if (customSelectWrapper?.classList.contains('open')) {
+      closeCustomSelect();
+    } else {
+      openCustomSelect();
+    }
+  }
+
+  if (customSelectTrigger && customSelectWrapper) {
+    customSelectTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleCustomSelect();
+    });
+
+    customSelectTrigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openCustomSelect();
+      } else if (e.key === 'Escape') {
+        closeCustomSelect();
+      }
+    });
+
+    customOptions.forEach((opt, idx) => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const val = opt.getAttribute('data-value') || '';
+        updateCustomDropdown(val);
+        closeCustomSelect();
+        customSelectTrigger.focus();
+      });
+
+      opt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const val = opt.getAttribute('data-value') || '';
+          updateCustomDropdown(val);
+          closeCustomSelect();
+          customSelectTrigger.focus();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          const next = customOptions[idx + 1] || customOptions[0];
+          next.focus();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          const prev = customOptions[idx - 1] || customOptions[customOptions.length - 1];
+          prev.focus();
+        } else if (e.key === 'Escape') {
+          e.preventDefault();
+          closeCustomSelect();
+          customSelectTrigger.focus();
+        } else if (e.key === 'Tab') {
+          closeCustomSelect();
+        }
+      });
+    });
+
+    // إغلاق القائمة عند النقر خارجها
+    document.addEventListener('click', (e) => {
+      if (!customSelectWrapper.contains(e.target)) {
+        closeCustomSelect();
+      }
+    });
+  }
+
+  // مزامنة التغيير عند تغيير الـ select الأصلي برمجياً
+  if (serviceTypeSelect) {
+    serviceTypeSelect.addEventListener('change', () => {
+      updateCustomDropdown(serviceTypeSelect.value);
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 14. معالجة نموذج طلب التصميم والتسعيرة عبر الواتساب (بدون أي إيموجي)
   // --------------------------------------------------------------------------
   const quoteForm = document.getElementById('quoteForm');
   if (quoteForm) {
@@ -960,10 +1151,11 @@ document.addEventListener('DOMContentLoaded', () => {
         clearFieldError(nameInput);
       }
 
-      // تحقق الجوال
-      const phoneVal = phoneInput.value.trim();
-      const phoneRegex = /^(05|5|\+?9665)[0-9]{8}$/;
-      if (!phoneVal || !phoneRegex.test(phoneVal.replace(/\s+/g, ''))) {
+      // تحقق الجوال (أرقام سعودية صحيحة)
+      const rawPhone = phoneInput.value.trim();
+      const cleanDigits = rawPhone.replace(/[^0-9]/g, '');
+      const phoneRegex = /^(05|5|9665)[0-9]{8}$/;
+      if (!rawPhone || !phoneRegex.test(cleanDigits)) {
         showFieldError(phoneInput, 'فضلاً أدخل رقم جوال سعودي صحيح (مثال: 0556339040)');
         isValid = false;
       } else {
@@ -980,32 +1172,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!isValid) return;
 
-      // تنسيق الرسالة باللغة العربية للواتساب
+      // تنسيق الرسالة باللغة العربية للواتساب (مطابقة بدقة للمواصفات بدون إيموجي)
       const name = nameInput.value.trim();
-      const phone = phoneVal;
-      const service = serviceSelect.options[serviceSelect.selectedIndex].text;
+      const serviceText = serviceSelect.options[serviceSelect.selectedIndex]?.text || serviceSelect.value;
       const notes = notesInput.value.trim() || 'لا توجد ملاحظات إضافية';
 
-      const whatsappMessage = 
-`*طلب تسعيرة وتصميم جديد – عملاق الرخام*
---------------------------------
-👤 *الاسم:* ${name}
-📱 *رقم الجوال:* ${phone}
-🏛️ *الخدمة المطلوبة:* ${service}
-📐 *المقاسات والملاحظات:*
-${notes}
---------------------------------
-📍 *المرسل:* عبر الموقع الإلكتروني (عملاق الرخام – الطائف)`;
+      const lines = [
+        "*طلب تسعيرة جديد - عملاق الرخام*",
+        "━━━━━━━━━━━━━━",
+        `*الاسم:* ${name}`,
+        `*رقم الجوال:* ${cleanDigits}`,
+        `*الخدمة المطلوبة:* ${serviceText}`,
+        `*المقاسات والملاحظات:* ${notes}`,
+        "━━━━━━━━━━━━━━",
+        "أُرسل من موقع عملاق الرخام"
+      ];
 
-      const encodedMessage = encodeURIComponent(whatsappMessage);
+      const encodedMessage = encodeURIComponent(lines.join('\n'));
       const whatsappUrl = `https://wa.me/966556339040?text=${encodedMessage}`;
 
       // فتح محادثة الواتساب
       window.open(whatsappUrl, '_blank');
 
-      // إعادة تعيين النموذج مع رسالة تأكيد
+      // إعادة تعيين النموذج والقائمة المنسدلة
       quoteForm.reset();
-      alert('شكراً لتواصلك مع عملاق الرخام. سيتم فتح محادثة الواتساب مباشرة لإكمال إرسال التفاصيل.');
+      updateCustomDropdown('');
     });
   }
 
@@ -1034,15 +1225,46 @@ ${notes}
     input.addEventListener('change', () => clearFieldError(input));
   });
 
+  // --------------------------------------------------------------------------
+  // 15. ربط شرائح الأحواض وبطاقات الخدمات بنموذج التسعيرة والتمرير الناعم
+  // --------------------------------------------------------------------------
+  const projectNotes = document.getElementById('projectNotes');
+  const serviceChips = document.querySelectorAll('.service-chip');
+
+  serviceChips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const sinkType = chip.getAttribute('data-sink-type') || chip.textContent.trim();
+      updateCustomDropdown('sinks');
+
+      if (projectNotes) {
+        const curNotes = projectNotes.value.trim();
+        if (!curNotes || curNotes.startsWith('نوع الحوض المطلوب:')) {
+          projectNotes.value = `نوع الحوض المطلوب: ${sinkType}`;
+        }
+      }
+
+      // تمرير ناعم لنموذج التسعيرة
+      if (typeof lenis !== 'undefined' && lenis && typeof lenis.scrollTo === 'function') {
+        lenis.scrollTo('#quote-form', { offset: -80 });
+      } else {
+        const quoteSection = document.getElementById('quote-form');
+        if (quoteSection) {
+          quoteSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+
   // ربط روابط بطاقات الخدمات بنموذج التسعيرة مع التحديد التلقائي للخدمة
   const serviceLinks = document.querySelectorAll('.service-link[data-service-select]');
-  const serviceTypeSelect = document.getElementById('serviceType');
   serviceLinks.forEach(link => {
     link.addEventListener('click', () => {
       const selectedService = link.getAttribute('data-service-select');
-      if (serviceTypeSelect && selectedService) {
-        serviceTypeSelect.value = selectedService;
-        clearFieldError(serviceTypeSelect);
+      if (selectedService) {
+        updateCustomDropdown(selectedService);
+      }
+      if (typeof lenis !== 'undefined' && lenis && typeof lenis.scrollTo === 'function') {
+        lenis.scrollTo('#quote-form', { offset: -80 });
       }
     });
   });

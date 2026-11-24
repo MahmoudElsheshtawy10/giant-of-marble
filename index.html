@@ -118,7 +118,7 @@
           </svg>
           <span>0556339040</span>
         </a>
-        <a href="https://wa.me/966556339040" target="_blank" rel="noopener noreferrer" class="top-whatsapp-pill">
+        <a href="https://wa.me/966556339040?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%B9%D9%85%D9%84%D8%A7%D9%82%20%D8%A7%D9%84%D8%B1%D8%AE%D8%A7%D9%85." target="_blank" rel="noopener noreferrer" class="top-whatsapp-pill">
           <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
             <path
               d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z" />
@@ -239,7 +239,7 @@
               <polyline points="12 19 5 12 12 5"></polyline>
             </svg>
           </a>
-          <a href="https://wa.me/966556339040?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%B9%D9%85%D9%84%D8%A7%D9%82%20%D8%A7%D9%84%D8%B1%D8%AE%D8%A7%D9%85"
+          <a href="https://wa.me/966556339040?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%B9%D9%85%D9%84%D8%A7%D9%82%20%D8%A7%D9%84%D8%B1%D8%AE%D8%A7%D9%85."
             target="_blank" rel="noopener noreferrer" class="btn btn-outline-gold">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path
@@ -384,48 +384,67 @@
         </div>
 
         <div class="services-grid">
-          <!-- بطاقة 01 -->
-          <div class="service-card">
-            <div class="service-number">01</div>
-            <div>
-              <h3 class="service-title">المغاسل والأحواض الرخامية</h3>
-              <p class="service-desc">
-                تصاميم فندقية حديثة بنظام الشطف المائل والتصريف المخفي، مع حفر الأحواض المصمتة والإنارة السفلية الخافتة.
-              </p>
+          <!-- بطاقة 01 المميزة: المغاسل والأحواض بعرض الشبكة الكامل -->
+          <div class="service-card featured-service-card">
+            <div class="service-card-top">
+              <div class="service-number">01</div>
+              <div class="service-header-content">
+                <h3 class="service-title">المغاسل والأحواض</h3>
+                <p class="service-subtitle-line">نوفر أنواعاً متعددة من الأحواض بحسب ذوقك ومساحتك.</p>
+              </div>
             </div>
-            <a href="#quote-form" class="service-link" data-service-select="sinks">
-              <span>طلب استشارة لهذه الخدمة</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-            </a>
+
+            <!-- شبكة الشرائح (Chips) للأحواض الثمانية -->
+            <div class="service-chips-grid">
+              <button type="button" class="service-chip" data-sink-type="أحواض كريستال">
+                <span class="chip-dot"></span>
+                <span class="chip-text">أحواض كريستال</span>
+              </button>
+              <button type="button" class="service-chip" data-sink-type="أحواض خزف">
+                <span class="chip-dot"></span>
+                <span class="chip-text">أحواض خزف</span>
+              </button>
+              <button type="button" class="service-chip" data-sink-type="أحواض رخامية">
+                <span class="chip-dot"></span>
+                <span class="chip-text">أحواض رخامية</span>
+              </button>
+              <button type="button" class="service-chip" data-sink-type="أحواض ريزن">
+                <span class="chip-dot"></span>
+                <span class="chip-text">أحواض ريزن</span>
+              </button>
+              <button type="button" class="service-chip" data-sink-type="أحواض بورسلان">
+                <span class="chip-dot"></span>
+                <span class="chip-text">أحواض بورسلان</span>
+              </button>
+              <button type="button" class="service-chip" data-sink-type="أحواض استيل">
+                <span class="chip-dot"></span>
+                <span class="chip-text">أحواض استيل</span>
+              </button>
+              <button type="button" class="service-chip" data-sink-type="أحواض من الرخام الطبيعي والصناعي">
+                <span class="chip-dot"></span>
+                <span class="chip-text">أحواض من الرخام الطبيعي والصناعي</span>
+              </button>
+              <button type="button" class="service-chip" data-sink-type="شلال أو مربع حسب الطلب">
+                <span class="chip-dot"></span>
+                <span class="chip-text">شلال أو مربع حسب الطلب</span>
+              </button>
+            </div>
+
+            <div class="service-card-bottom">
+              <a href="#quote-form" class="service-link" data-service-select="sinks">
+                <span>طلب استشارة لهذه الخدمة</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+              </a>
+            </div>
           </div>
 
-          <!-- بطاقة 02 -->
+          <!-- بطاقة 02: الدرج والسلالم الرخامية -->
           <div class="service-card">
             <div class="service-number">02</div>
-            <div>
-              <h3 class="service-title">الطاولات والأسطح الرخامية</h3>
-              <p class="service-desc">
-                طاولات طعام ملكية وكوفي تيبل مع أسطح مطابخ وكاونترات استقبال بمقاومة فائقة للحرارة والزيوت مع حواف
-                مشطوفة.
-              </p>
-            </div>
-            <a href="#quote-form" class="service-link" data-service-select="tables">
-              <span>طلب استشارة لهذه الخدمة</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-            </a>
-          </div>
-
-          <!-- بطاقة 03 -->
-          <div class="service-card">
-            <div class="service-number">03</div>
             <div>
               <h3 class="service-title">الدرج والسلالم الرخامية</h3>
               <p class="service-desc">
@@ -442,9 +461,9 @@
             </a>
           </div>
 
-          <!-- بطاقة 04 -->
+          <!-- بطاقة 03: القص والتفصيل المخصص -->
           <div class="service-card">
-            <div class="service-number">04</div>
+            <div class="service-number">03</div>
             <div>
               <h3 class="service-title">القص والتفصيل المخصص</h3>
               <p class="service-desc">
@@ -594,34 +613,66 @@
         </div>
 
         <div class="why-us-grid">
+          <!-- بطاقة 1: طاولات وكاونترات حسب الطلب -->
           <div class="why-card">
             <div class="why-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32">
-                <line x1="12" y1="1" x2="12" y2="23"></line>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="5" width="20" height="4" rx="1"></rect>
+                <line x1="5" y1="9" x2="5" y2="19"></line>
+                <line x1="19" y1="9" x2="19" y2="19"></line>
+                <line x1="10" y1="9" x2="10" y2="19"></line>
+                <line x1="14" y1="9" x2="14" y2="19"></line>
               </svg>
             </div>
-            <h3 class="why-title">أسعار مناسبة وتفصيل مباشر</h3>
+            <h3 class="why-title">طاولات وكاونترات حسب الطلب</h3>
             <p class="why-desc">
-              تفصيل وتصنيع مباشر في ورشتنا لنوفر لك أفضل الأسعار التنافسية بدون وسطاء، مع الحرص على جودة الحجر ودقة
-              القص.
+              نفصّل طاولات بأي تصميم تختاره، وكاونترات وبارات للكافيهات والمطاعم، بالمقاسات والخامة التي تناسب مساحتك.
             </p>
           </div>
 
+          <!-- بطاقة 2: دقة في المواعيد وسرعة الاستجابة -->
           <div class="why-card">
             <div class="why-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32">
-                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                <polyline points="2 17 12 22 22 17"></polyline>
-                <polyline points="2 12 12 17 22 12"></polyline>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
               </svg>
             </div>
-            <h3 class="why-title">تنسيق وتخطيط قبل التنفيذ</h3>
+            <h3 class="why-title">دقة في المواعيد وسرعة الاستجابة</h3>
             <p class="why-desc">
-              نراجع المقاسات وننسق توزيع الألواح والعروق لتتوافق بدقة مع رغبة العميل والمخطط المعماري قبل بدء القص.
+              نلتزم بمواعيد التسليم والتركيب المتفق عليها، ونرد على استفساراتك بسرعة.
             </p>
           </div>
 
+          <!-- بطاقة 3: فنيون بأعلى مستوى -->
+          <div class="why-card">
+            <div class="why-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+              </svg>
+            </div>
+            <h3 class="why-title">فنيون بأعلى مستوى</h3>
+            <p class="why-desc">
+              فريق فنيين متمرسين في القص والتشطيب والتركيب لنتيجة نظيفة ودقيقة.
+            </p>
+          </div>
+
+          <!-- بطاقة 4: الالتزام والاحترام والاستجابة لطلب العميل -->
+          <div class="why-card">
+            <div class="why-icon-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="7"></circle>
+                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                <polyline points="9 8 11 10 15 6"></polyline>
+              </svg>
+            </div>
+            <h3 class="why-title">الالتزام والاحترام والاستجابة لطلب العميل</h3>
+            <p class="why-desc">
+              نحترم وقتك وملاحظاتك، ونستجيب لطلبك في كل مرحلة من التصميم حتى التسليم.
+            </p>
+          </div>
+
+          <!-- بطاقة 5: توصيل وتركيب -->
           <div class="why-card">
             <div class="why-icon-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32">
@@ -631,12 +682,13 @@
                 <circle cx="18.5" cy="18.5" r="2.5"></circle>
               </svg>
             </div>
-            <h3 class="why-title">توصيل وتركيب </h3>
+            <h3 class="why-title">توصيل وتركيب</h3>
             <p class="why-desc">
               توصيل سليم للموقع وتثبيت محكم في كافة انحاء المملكه .
             </p>
           </div>
 
+          <!-- بطاقة 6: عناية بالتركيب وثبات آمن -->
           <div class="why-card">
             <div class="why-icon-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32">
@@ -676,8 +728,7 @@
       <div class="cta-banner-card">
         <h2 class="cta-banner-title">جاهز تحوّل فكرتك إلى واقع؟ ابدأ مشروعك اليوم</h2>
         <p class="cta-banner-desc">
-          تواصل معنا الآن ليقوم مهندسونا بمعاينة الموقع واقتراح أفضل عينات الرخام المناسبة لذوقك وميزانيتك
-          مجاناً.
+          تواصل معنا الآن ليقوم خبراؤنا بمعاينة الموقع واقتراح أفضل عينات الرخام الطبيعي والصناعي المناسبة لذوقك وتصميمك.
         </p>
         <div class="cta-banner-btns">
           <a href="#quote-form" class="btn btn-gold">
@@ -707,7 +758,7 @@
           <h2 class="section-title">تواصل معنا واطلب تسعيرتك</h2>
           <div class="section-line"></div>
           <p class="section-subtitle">
-            فريقنا الهندسي في الطائف جاهز للرد على استفساراتكم وتحويل أفكاركم إلى تصاميم ملموسة بدقة تليق بمنزلك.
+            فريقنا الهندسي جاهز للرد على استفساراتكم وتحويل أفكاركم إلى تصاميم ملموسة بدقة تليق بمكانكم.
           </p>
         </div>
 
@@ -756,7 +807,7 @@
               </div>
             </div>
 
-            <a href="https://wa.me/966556339040" target="_blank" rel="noopener noreferrer" class="btn-direct-whatsapp">
+            <a href="https://wa.me/966556339040?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%B9%D9%85%D9%84%D8%A7%D9%82%20%D8%A7%D9%84%D8%B1%D8%AE%D8%A7%D9%85." target="_blank" rel="noopener noreferrer" class="btn-direct-whatsapp">
               <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
                 <path
                   d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z" />
@@ -795,13 +846,61 @@
               </div>
 
               <div class="form-group">
-                <label for="serviceType" class="form-label">نوع الخدمة أو المنتج <span class="req">*</span></label>
-                <select id="serviceType" class="form-select" required>
-                  <option value="">اختر الخدمة المطلوبة...</option>
-                  <option value="sinks">مغاسل وأحواض رخامية مع المرايات والتركيب </option>
-                  <option value="tables">طاولات حسب الطلب باي تصميم</option>
-                  <option value="stairs">كاونترات وبارات كافيهات حسب الطلب</option>
-                </select>
+                <label for="serviceType" class="form-label" id="serviceTypeLabel">نوع الخدمة أو المنتج <span class="req">*</span></label>
+                <div class="custom-select-wrapper" id="customSelectWrapper">
+                  <select id="serviceType" class="form-select sr-only-native" required tabindex="-1" aria-hidden="true">
+                    <option value="">اختر الخدمة المطلوبة...</option>
+                    <option value="sinks">المغاسل والأحواض</option>
+                    <option value="stairs">الدرج والسلالم الرخامية</option>
+                    <option value="tables">طاولات حسب الطلب بأي تصميم</option>
+                    <option value="counters">كاونترات وبارات كافيهات حسب الطلب</option>
+                    <option value="custom">القص والتفصيل المخصص</option>
+                  </select>
+                  <button type="button" class="custom-select-trigger" id="customSelectTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="serviceTypeLabel customSelectTrigger">
+                    <span class="custom-select-label" id="customSelectLabel">اختر الخدمة المطلوبة...</span>
+                    <svg class="custom-select-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                  <ul class="custom-select-options" id="customSelectOptions" role="listbox" aria-labelledby="serviceTypeLabel" tabindex="-1">
+                    <li class="custom-option selected" role="option" data-value="" aria-selected="true" tabindex="0">
+                      <span class="option-text">اختر الخدمة المطلوبة...</span>
+                      <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </li>
+                    <li class="custom-option" role="option" data-value="sinks" aria-selected="false" tabindex="0">
+                      <span class="option-text">المغاسل والأحواض</span>
+                      <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </li>
+                    <li class="custom-option" role="option" data-value="stairs" aria-selected="false" tabindex="0">
+                      <span class="option-text">الدرج والسلالم الرخامية</span>
+                      <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </li>
+                    <li class="custom-option" role="option" data-value="tables" aria-selected="false" tabindex="0">
+                      <span class="option-text">طاولات حسب الطلب بأي تصميم</span>
+                      <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </li>
+                    <li class="custom-option" role="option" data-value="counters" aria-selected="false" tabindex="0">
+                      <span class="option-text">كاونترات وبارات كافيهات حسب الطلب</span>
+                      <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </li>
+                    <li class="custom-option" role="option" data-value="custom" aria-selected="false" tabindex="0">
+                      <span class="option-text">القص والتفصيل المخصص</span>
+                      <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </li>
+                  </ul>
+                </div>
                 <span class="form-error-msg">فضلاً حدد نوع الخدمة</span>
               </div>
 
@@ -842,7 +941,7 @@
           والجمال بدقة تناسب مختلف الأذواق والمخططات.
         </p>
         <div class="footer-socials">
-          <a href="https://wa.me/966556339040" target="_blank" rel="noopener noreferrer" class="social-link"
+          <a href="https://wa.me/966556339040?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%B9%D9%85%D9%84%D8%A7%D9%82%20%D8%A7%D9%84%D8%B1%D8%AE%D8%A7%D9%85." target="_blank" rel="noopener noreferrer" class="social-link"
             title="واتساب">
             <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
               <path
@@ -877,10 +976,10 @@
       <div class="footer-links-col">
         <h4 class="footer-col-title">خدمات الرخام</h4>
         <div class="footer-links-list">
-          <a href="#services">المغاسل والأحواض الرخامية</a>
-          <a href="#services">الطاولات والأسطح الرخامية</a>
+          <a href="#services">المغاسل والأحواض</a>
           <a href="#services">الدرج والسلالم الرخامية</a>
-          <a href="#services">القص والتفصيل حسب المخططات</a>
+          <a href="#services">طاولات وكاونترات حسب الطلب</a>
+          <a href="#services">القص والتفصيل المخصص</a>
         </div>
       </div>
 
@@ -920,13 +1019,13 @@
         © 2026 عملاق الرخام – جميع الحقوق محفوظة – الطائف، المملكة العربية السعودية
       </div>
       <div class="footer-note" style="color: var(--gold-light);">
-        تصميم وتنفيذ فائق الفخامة لعملاق الرخام
+        تصميم وتنفيذ فائق الفخامة لعملاق الرخام بواسطت Apex Technology
       </div>
     </div>
   </footer>
 
   <!-- 13) زر الواتساب العائم بنبض لطيف -->
-  <a href="https://wa.me/966556339040?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%B9%D9%85%D9%84%D8%A7%D9%82%20%D8%A7%D9%84%D8%B1%D8%AE%D8%A7%D9%85%D8%8C%20%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1%20%D9%88%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B1%D8%AE%D8%A7%D9%85"
+  <a href="https://wa.me/966556339040?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A7%D8%AA%20%D8%B9%D9%85%D9%84%D8%A7%D9%82%20%D8%A7%D9%84%D8%B1%D8%AE%D8%A7%D9%85."
     target="_blank" rel="noopener noreferrer" class="floating-whatsapp-btn" title="محادثة واتساب مباشرة">
     <svg viewBox="0 0 24 24" fill="currentColor" width="30" height="30">
       <path
@@ -949,7 +1048,7 @@
         <!-- معرض الصور المصغر -->
         <div class="modal-gallery-col">
           <div class="modal-main-img-box">
-            <img src="" alt="" id="modalMainImg" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" alt="صورة المنتج" id="modalMainImg" />
           </div>
           <div class="modal-thumbnails" id="modalThumbnails"></div>
         </div>
@@ -984,7 +1083,7 @@
     <button type="button" class="lightbox-nav-btn lightbox-next" id="lightboxNextBtn"
       aria-label="الصورة التالية">‹</button>
     <div class="lightbox-content-wrap">
-      <img src="" alt="" class="lightbox-image" id="lightboxImage" />
+      <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" alt="صورة المعرض" class="lightbox-image" id="lightboxImage" />
       <div class="lightbox-caption" id="lightboxCaption"></div>
     </div>
   </div>
