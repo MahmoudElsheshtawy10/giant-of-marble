@@ -373,75 +373,77 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
 
-    // حركة قسم الخدمات: إظهار البطاقة العريضة أولاً، ثم تتابع الشرائح (0.06s)، ثم البطاقات السفلية (0.12s)
-    const featuredCard = document.querySelector('.service-card.featured-service-card');
-    const serviceChips = document.querySelectorAll('.service-chip');
-    const lowerCards = document.querySelectorAll('.services-grid > .service-card:not(.featured-service-card)');
+    // حركة قسم الخدمات (بطاقتان أفقيتان عريضتان بنظام Zigzag مع كشف بالـ clip-path وتتابع للشرائح)
+    const serviceFeatureCards = document.querySelectorAll('.service-feature-card');
+    serviceFeatureCards.forEach((card) => {
+      const isReverse = card.classList.contains('service-card-reverse');
+      const imageFrame = card.querySelector('.service-image-frame');
+      const chips = card.querySelectorAll('.service-chip');
+      const bottomLink = card.querySelector('.service-link');
 
-    if (featuredCard) {
-      const servicesTl = gsap.timeline({
+      const cardTl = gsap.timeline({
         scrollTrigger: {
-          trigger: '.services-grid',
-          start: 'top 80%',
+          trigger: card,
+          start: 'top 82%',
         }
       });
 
-      servicesTl.from(featuredCard, {
-        y: 35,
+      // ظهور البطاقة بنعومة مع translateY
+      cardTl.from(card, {
+        y: 40,
         opacity: 0,
-        duration: 0.65,
+        duration: 0.75,
         ease: 'power3.out',
       });
 
-      if (serviceChips.length) {
-        servicesTl.from(serviceChips, {
+      // كشف الصورة بمسح بالـ clip-path باتجاه المحتوى
+      if (imageFrame) {
+        // في الـ RTL:
+        // بطاقة 01 (محتوى باليمين، صورة باليسار): المسح يتجه نحو اليمين (المحتوى)
+        // بطاقة 02 (صورة باليمين، محتوى باليسار): المسح يتجه نحو اليسار (المحتوى)
+        const initialClip = isReverse ? 'inset(0 0 0 100%)' : 'inset(0 100% 0 0)';
+        cardTl.fromTo(imageFrame,
+          { clipPath: initialClip },
+          { clipPath: 'inset(0 0 0 0)', duration: 0.85, ease: 'power2.inOut' },
+          '-=0.45'
+        );
+      }
+
+      // تتابع ظهور الشرائح (Chips) بفارق 0.06 ثانية
+      if (chips.length) {
+        cardTl.from(chips, {
           scale: 0.9,
           opacity: 0,
           y: 12,
           duration: 0.4,
           stagger: 0.06,
           ease: 'back.out(1.4)',
-        }, '-=0.25');
+        }, '-=0.35');
       }
 
-      if (lowerCards.length) {
-        servicesTl.from(lowerCards, {
-          y: 35,
+      // ظهور رابط طلب الاستشارة
+      if (bottomLink) {
+        cardTl.from(bottomLink, {
           opacity: 0,
-          duration: 0.65,
-          stagger: 0.12,
-          ease: 'power3.out',
+          y: 10,
+          duration: 0.4,
+          ease: 'power2.out',
         }, '-=0.2');
       }
-    } else {
-      const serviceCards = document.querySelectorAll('.service-card');
-      if (serviceCards.length) {
-        gsap.from(serviceCards, {
-          y: 40,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.12,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: '.services-grid',
-            start: 'top 80%',
-          }
-        });
-      }
-    }
+    });
 
-    // حركة بطاقات لماذا نحن المتتالية
+    // حركة بطاقات لماذا نحن المتتالية (0.12s stagger)
     const whyCards = document.querySelectorAll('.why-card');
     if (whyCards.length) {
       gsap.from(whyCards, {
-        y: 40,
+        y: 35,
         opacity: 0,
-        duration: 0.8,
+        duration: 0.75,
         stagger: 0.12,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: '.why-us-grid',
-          start: 'top 80%',
+          start: 'top 82%',
         }
       });
     }
@@ -565,10 +567,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoryDictionary = {
     sinks: 'مغاسل',
     tables: 'طاولات',
-    stairs: 'درج',
-    kitchens: 'أسطح مطابخ',
-    cladding: 'كسوات جدارية',
-    custom: 'قص وتفصيل مخصص',
     other: 'أخرى'
   };
 
@@ -1226,20 +1224,36 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 15. ربط شرائح الأحواض وبطاقات الخدمات بنموذج التسعيرة والتمرير الناعم
+  // 15. ربط شرائح الخدمات وبطاقاتها بنموذج التسعيرة والتمرير الناعم
   // --------------------------------------------------------------------------
   const projectNotes = document.getElementById('projectNotes');
   const serviceChips = document.querySelectorAll('.service-chip');
 
   serviceChips.forEach((chip) => {
     chip.addEventListener('click', () => {
-      const sinkType = chip.getAttribute('data-sink-type') || chip.textContent.trim();
-      updateCustomDropdown('sinks');
+      const sinkType = chip.getAttribute('data-sink-type');
+      const tableType = chip.getAttribute('data-table-type');
+      const chipText = chip.querySelector('.chip-text')?.textContent.trim() || chip.textContent.trim();
 
-      if (projectNotes) {
-        const curNotes = projectNotes.value.trim();
-        if (!curNotes || curNotes.startsWith('نوع الحوض المطلوب:')) {
-          projectNotes.value = `نوع الحوض المطلوب: ${sinkType}`;
+      if (sinkType) {
+        updateCustomDropdown('sinks');
+        if (projectNotes) {
+          const curNotes = projectNotes.value.trim();
+          if (!curNotes || curNotes.startsWith('نوع الحوض المطلوب:')) {
+            projectNotes.value = `نوع الحوض المطلوب: ${sinkType}`;
+          }
+        }
+      } else if (tableType) {
+        if (tableType === 'كاونترات' || tableType === 'بارات للكافيهات والمطاعم') {
+          updateCustomDropdown('counters');
+        } else {
+          updateCustomDropdown('tables');
+        }
+        if (projectNotes) {
+          const curNotes = projectNotes.value.trim();
+          if (!curNotes || curNotes.startsWith('النوع المطلوب:')) {
+            projectNotes.value = `النوع المطلوب: ${tableType}`;
+          }
         }
       }
 

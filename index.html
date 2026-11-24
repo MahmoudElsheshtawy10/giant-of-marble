@@ -8,9 +8,9 @@
 
   <!-- بيانات محركات البحث والتواصل الاجتماعي (SEO & Social Sharing) -->
   <meta name="description"
-    content="عملاق الرخام في الطائف – رواد تفصيل وتركيب الرخام الطبيعي والصناعي، مغاسل رخامية فندقية، طاولات ومطابخ، درج وسلالم، وتكسيات جدارية بأعلى معايير الإتقان." />
+    content="عملاق الرخام في الطائف – تفصيل وتركيب الرخام الطبيعي والصناعي، مغاسل وأحواض فندقية، طاولات وكاونترات حسب الطلب بأعلى معايير الإتقان." />
   <meta name="keywords"
-    content="رخام الطائف, عملاق الرخام, مغاسل رخام, طاولات رخام, درج رخام, رخام كلكتا, رخام طبيعي الطائف, ووترجيت رخام" />
+    content="رخام الطائف, عملاق الرخام, مغاسل رخام, طاولات رخام, كاونترات كافيهات, رخام طبيعي الطائف" />
   <meta name="theme-color" content="#1B1D22" />
 
   <!-- Open Graph / Facebook / WhatsApp -->
@@ -25,7 +25,7 @@
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="عملاق الرخام – Giant of Marble" />
-  <meta name="twitter:description" content="تفصيل وتركيب الرخام الفاخر بالطائف – مغاسل، طاولات، درج، وجدران بوكماتش." />
+  <meta name="twitter:description" content="تفصيل وتركيب الرخام الفاخر بالطائف – مغاسل وأحواض، طاولات وكاونترات حسب الطلب." />
   <meta name="twitter:image" content="assets/logo.png" />
 
   <!-- الأيقونة المفضلة (Favicon) من الشعار المرفق -->
@@ -370,7 +370,7 @@
       </div>
     </section>
 
-    <!-- 5) قسم الخدمات (Services Section - 4 Cards) -->
+    <!-- 5) قسم الخدمات (Services Section - 2 Featured Services in Zigzag) -->
     <section id="services" class="section services-section">
       <div class="container">
         <div class="section-header">
@@ -383,102 +383,127 @@
           </p>
         </div>
 
-        <div class="services-grid">
-          <!-- بطاقة 01 المميزة: المغاسل والأحواض بعرض الشبكة الكامل -->
-          <div class="service-card featured-service-card">
-            <div class="service-card-top">
-              <div class="service-number">01</div>
-              <div class="service-header-content">
-                <h3 class="service-title">المغاسل والأحواض</h3>
-                <p class="service-subtitle-line">نوفر أنواعاً متعددة من الأحواض بحسب ذوقك ومساحتك.</p>
+        <div class="services-zigzag-container">
+          <!-- بطاقة 01: المغاسل والأحواض (محتوى على اليمين وصورة على اليسار) -->
+          <div class="service-feature-card" data-service-card="01">
+            <div class="service-feature-content">
+              <div class="service-card-top">
+                <div class="service-number">01</div>
+                <div class="service-header-content">
+                  <h3 class="service-title">المغاسل والأحواض</h3>
+                  <p class="service-subtitle-line">نوفر أنواعاً متعددة من الأحواض بحسب ذوقك ومساحتك.</p>
+                </div>
+              </div>
+
+              <!-- شبكة الشرائح (Chips) للأحواض الثمانية -->
+              <div class="service-chips-grid sinks-chips-grid">
+                <button type="button" class="service-chip" data-sink-type="أحواض كريستال">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">أحواض كريستال</span>
+                </button>
+                <button type="button" class="service-chip" data-sink-type="أحواض خزف">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">أحواض خزف</span>
+                </button>
+                <button type="button" class="service-chip" data-sink-type="أحواض رخامية">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">أحواض رخامية</span>
+                </button>
+                <button type="button" class="service-chip" data-sink-type="أحواض ريزن">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">أحواض ريزن</span>
+                </button>
+                <button type="button" class="service-chip" data-sink-type="أحواض بورسلان">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">أحواض بورسلان</span>
+                </button>
+                <button type="button" class="service-chip" data-sink-type="أحواض استيل">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">أحواض استيل</span>
+                </button>
+                <button type="button" class="service-chip" data-sink-type="أحواض من الرخام الطبيعي والصناعي">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">أحواض من الرخام الطبيعي والصناعي</span>
+                </button>
+                <button type="button" class="service-chip" data-sink-type="شلال أو مربع حسب الطلب">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">شلال أو مربع حسب الطلب</span>
+                </button>
+              </div>
+
+              <div class="service-card-bottom">
+                <a href="#quote-form" class="service-link" data-service-select="sinks">
+                  <span>طلب استشارة لهذه الخدمة</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
+                </a>
               </div>
             </div>
 
-            <!-- شبكة الشرائح (Chips) للأحواض الثمانية -->
-            <div class="service-chips-grid">
-              <button type="button" class="service-chip" data-sink-type="أحواض كريستال">
-                <span class="chip-dot"></span>
-                <span class="chip-text">أحواض كريستال</span>
-              </button>
-              <button type="button" class="service-chip" data-sink-type="أحواض خزف">
-                <span class="chip-dot"></span>
-                <span class="chip-text">أحواض خزف</span>
-              </button>
-              <button type="button" class="service-chip" data-sink-type="أحواض رخامية">
-                <span class="chip-dot"></span>
-                <span class="chip-text">أحواض رخامية</span>
-              </button>
-              <button type="button" class="service-chip" data-sink-type="أحواض ريزن">
-                <span class="chip-dot"></span>
-                <span class="chip-text">أحواض ريزن</span>
-              </button>
-              <button type="button" class="service-chip" data-sink-type="أحواض بورسلان">
-                <span class="chip-dot"></span>
-                <span class="chip-text">أحواض بورسلان</span>
-              </button>
-              <button type="button" class="service-chip" data-sink-type="أحواض استيل">
-                <span class="chip-dot"></span>
-                <span class="chip-text">أحواض استيل</span>
-              </button>
-              <button type="button" class="service-chip" data-sink-type="أحواض من الرخام الطبيعي والصناعي">
-                <span class="chip-dot"></span>
-                <span class="chip-text">أحواض من الرخام الطبيعي والصناعي</span>
-              </button>
-              <button type="button" class="service-chip" data-sink-type="شلال أو مربع حسب الطلب">
-                <span class="chip-dot"></span>
-                <span class="chip-text">شلال أو مربع حسب الطلب</span>
-              </button>
-            </div>
-
-            <div class="service-card-bottom">
-              <a href="#quote-form" class="service-link" data-service-select="sinks">
-                <span>طلب استشارة لهذه الخدمة</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <line x1="19" y1="12" x2="5" y2="12"></line>
-                  <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-              </a>
+            <div class="service-feature-media">
+              <div class="service-image-frame">
+                <img src="assets/products/prod-4.jpg" alt="المغاسل والأحواض الفاخرة - عملاق الرخام" class="service-feature-img" loading="lazy" />
+                <div class="service-image-border-inset"></div>
+                <div class="service-image-gradient-overlay"></div>
+              </div>
             </div>
           </div>
 
-          <!-- بطاقة 02: الدرج والسلالم الرخامية -->
-          <div class="service-card">
-            <div class="service-number">02</div>
-            <div>
-              <h3 class="service-title">الدرج والسلالم الرخامية</h3>
-              <p class="service-desc">
-                تفصيل دعسات مشطوفة ومجرى ميكانيكي لشرائط LED المخفية، وسلالم دائرية حلزونية للقصور مع نعلات مدمجة محكمة.
-              </p>
-            </div>
-            <a href="#quote-form" class="service-link" data-service-select="stairs">
-              <span>طلب استشارة لهذه الخدمة</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-            </a>
-          </div>
+          <!-- بطاقة 02: طاولات وكاونترات حسب الطلب (صورة على اليمين ومحتوى على اليسار) -->
+          <div class="service-feature-card service-card-reverse" data-service-card="02">
+            <div class="service-feature-content">
+              <div class="service-card-top">
+                <div class="service-number">02</div>
+                <div class="service-header-content">
+                  <h3 class="service-title">طاولات وكاونترات حسب الطلب</h3>
+                  <p class="service-subtitle-line">
+                    نفصّل طاولات بأي تصميم تختاره، وكاونترات وبارات للكافيهات والمطاعم، بالمقاسات والخامة التي تناسب مساحتك.
+                  </p>
+                </div>
+              </div>
 
-          <!-- بطاقة 03: القص والتفصيل المخصص -->
-          <div class="service-card">
-            <div class="service-number">03</div>
-            <div>
-              <h3 class="service-title">القص والتفصيل المخصص</h3>
-              <p class="service-desc">
-                تنفيذ أدق المخططات الهندسية وجداريات البوكماتش المتطابقة وزخارف الووترجيت المعقدة بما يطابق رؤية المصمم
-                الداخلي.
-              </p>
+              <!-- شبكة الشرائح (Chips) للطاولات والكاونترات -->
+              <div class="service-chips-grid tables-chips-grid">
+                <button type="button" class="service-chip" data-table-type="طاولات طعام">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">طاولات طعام</span>
+                </button>
+                <button type="button" class="service-chip" data-table-type="طاولات قهوة وضيافة">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">طاولات قهوة وضيافة</span>
+                </button>
+                <button type="button" class="service-chip" data-table-type="كاونترات">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">كاونترات</span>
+                </button>
+                <button type="button" class="service-chip" data-table-type="بارات للكافيهات والمطاعم">
+                  <span class="chip-dot"></span>
+                  <span class="chip-text">بارات للكافيهات والمطاعم</span>
+                </button>
+              </div>
+
+              <div class="service-card-bottom">
+                <a href="#quote-form" class="service-link" data-service-select="tables">
+                  <span>طلب استشارة لهذه الخدمة</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                  </svg>
+                </a>
+              </div>
             </div>
-            <a href="#quote-form" class="service-link" data-service-select="custom">
-              <span>طلب استشارة لهذه الخدمة</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-              </svg>
-            </a>
+
+            <div class="service-feature-media">
+              <div class="service-image-frame">
+                <img src="assets/products/prod-6.jpg" alt="طاولات وكاونترات حسب الطلب - عملاق الرخام" class="service-feature-img" loading="lazy" />
+                <div class="service-image-border-inset"></div>
+                <div class="service-image-gradient-overlay"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -613,24 +638,7 @@
         </div>
 
         <div class="why-us-grid">
-          <!-- بطاقة 1: طاولات وكاونترات حسب الطلب -->
-          <div class="why-card">
-            <div class="why-icon-box">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="5" width="20" height="4" rx="1"></rect>
-                <line x1="5" y1="9" x2="5" y2="19"></line>
-                <line x1="19" y1="9" x2="19" y2="19"></line>
-                <line x1="10" y1="9" x2="10" y2="19"></line>
-                <line x1="14" y1="9" x2="14" y2="19"></line>
-              </svg>
-            </div>
-            <h3 class="why-title">طاولات وكاونترات حسب الطلب</h3>
-            <p class="why-desc">
-              نفصّل طاولات بأي تصميم تختاره، وكاونترات وبارات للكافيهات والمطاعم، بالمقاسات والخامة التي تناسب مساحتك.
-            </p>
-          </div>
-
-          <!-- بطاقة 2: دقة في المواعيد وسرعة الاستجابة -->
+          <!-- بطاقة 1: دقة في المواعيد وسرعة الاستجابة -->
           <div class="why-card">
             <div class="why-icon-box">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32" stroke-linecap="round" stroke-linejoin="round">
@@ -851,10 +859,8 @@
                   <select id="serviceType" class="form-select sr-only-native" required tabindex="-1" aria-hidden="true">
                     <option value="">اختر الخدمة المطلوبة...</option>
                     <option value="sinks">المغاسل والأحواض</option>
-                    <option value="stairs">الدرج والسلالم الرخامية</option>
                     <option value="tables">طاولات حسب الطلب بأي تصميم</option>
                     <option value="counters">كاونترات وبارات كافيهات حسب الطلب</option>
-                    <option value="custom">القص والتفصيل المخصص</option>
                   </select>
                   <button type="button" class="custom-select-trigger" id="customSelectTrigger" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="serviceTypeLabel customSelectTrigger">
                     <span class="custom-select-label" id="customSelectLabel">اختر الخدمة المطلوبة...</span>
@@ -875,12 +881,6 @@
                         <polyline points="20 6 9 17 4 12"></polyline>
                       </svg>
                     </li>
-                    <li class="custom-option" role="option" data-value="stairs" aria-selected="false" tabindex="0">
-                      <span class="option-text">الدرج والسلالم الرخامية</span>
-                      <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                    </li>
                     <li class="custom-option" role="option" data-value="tables" aria-selected="false" tabindex="0">
                       <span class="option-text">طاولات حسب الطلب بأي تصميم</span>
                       <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -889,12 +889,6 @@
                     </li>
                     <li class="custom-option" role="option" data-value="counters" aria-selected="false" tabindex="0">
                       <span class="option-text">كاونترات وبارات كافيهات حسب الطلب</span>
-                      <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                    </li>
-                    <li class="custom-option" role="option" data-value="custom" aria-selected="false" tabindex="0">
-                      <span class="option-text">القص والتفصيل المخصص</span>
                       <svg class="option-check" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                       </svg>
@@ -977,9 +971,7 @@
         <h4 class="footer-col-title">خدمات الرخام</h4>
         <div class="footer-links-list">
           <a href="#services">المغاسل والأحواض</a>
-          <a href="#services">الدرج والسلالم الرخامية</a>
           <a href="#services">طاولات وكاونترات حسب الطلب</a>
-          <a href="#services">القص والتفصيل المخصص</a>
         </div>
       </div>
 
