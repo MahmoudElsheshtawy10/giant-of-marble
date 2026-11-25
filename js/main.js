@@ -551,58 +551,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 10. قسم المنتجات: الرندرة، التصفية، والسلايدر، والتفاصيل
+  // 10. قسم المنتجات الحصرية (Category Blocks Architecture)
   // --------------------------------------------------------------------------
-  const productsTrack = document.getElementById('productsTrack');
-  const productsTrackContainer = document.querySelector('.products-track-container');
-  const filterTabsContainer = document.getElementById('filterTabsContainer');
-  const sliderPrevBtn = document.getElementById('sliderPrevBtn');
-  const sliderNextBtn = document.getElementById('sliderNextBtn');
-  const sliderDotsContainer = document.getElementById('sliderDots');
+  const categoryBlocksContainer = document.getElementById('categoryBlocksContainer');
 
-  let activeCategory = 'all';
-  let displayedProducts = [];
-
-  // قاموس الفئات المعتمدة باللغة العربية
-  const categoryDictionary = {
-    sinks: 'مغاسل',
-    tables: 'طاولات',
-    other: 'أخرى'
+  // قاموس وبيانات وصف الفئات الرئيسية
+  const categoryMetadata = {
+    sinks: {
+      order: 1,
+      name: 'المغاسل والأحواض الرخامية',
+      desc: 'مغاسل فندقية عائمة ومستقلة منحوتة من الرخام والترافرتين الطبيعي، بتصاميم هندسية وحفر مائي متقن.',
+      unit: 'تصاميم'
+    },
+    tables: {
+      order: 2,
+      name: 'طاولات وكاونترات حسب الطلب',
+      desc: 'طاولات طعام وضيافة وكاونترات استقبال ومقاهي مخصصة، بالمقاسات والخامة وتفاصيل التضليع التي تناسب مساحتك.',
+      unit: 'تصاميم'
+    }
   };
-
-  // توليد أزرار التصفية ديناميكياً بناءً على المنتجات المتوفرة فعلياً
-  function renderFilterTabs() {
-    if (!filterTabsContainer || !window.marbleProducts) return;
-
-    // استخراج الفئات الموجودة فعلياً في المنتجات
-    const activeCategories = [];
-    window.marbleProducts.forEach(p => {
-      if (p.category && !activeCategories.includes(p.category)) {
-        activeCategories.push(p.category);
-      }
-    });
-
-    let tabsHTML = `<button type="button" class="filter-btn active" data-filter="all">الكل (${window.marbleProducts.length})</button>`;
-
-    activeCategories.forEach(cat => {
-      const label = categoryDictionary[cat] || cat;
-      const count = window.marbleProducts.filter(p => p.category === cat).length;
-      tabsHTML += `<button type="button" class="filter-btn" data-filter="${cat}">${label} (${count})</button>`;
-    });
-
-    filterTabsContainer.innerHTML = tabsHTML;
-
-    // ربط مستمعات النقر للتبويبات المنشأة
-    const tabButtons = filterTabsContainer.querySelectorAll('.filter-btn');
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeCategory = btn.getAttribute('data-filter');
-        renderProducts(activeCategory);
-      });
-    });
-  }
 
   // دالة مساعدة لتوليد رسالة طلب تسعيرة المنتج بدون إيموجي
   function getProductWhatsappText(product) {
@@ -619,7 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return encodeURIComponent(lines.join('\n'));
   }
 
-  // دالة توليد بطاقة المنتج
+  // دالة توليد بطاقة المنتج الفاخرة
   function createProductCardHTML(product) {
     const whatsappQuoteText = getProductWhatsappText(product);
     const badgeText = product.marbleBadge || product.marbleType || 'رخام طبيعي فاخر';
@@ -648,172 +615,238 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  // دالة عرض المنتجات حسب الفئة
-  function renderProducts(category = 'all') {
-    if (!productsTrack || !window.marbleProducts) return;
+  // دالة تهيئة سلايدر الفئة (للفئات التي تحتوي أكثر من 6 منتجات)
+  function initCategorySlider(wrapper, catKey) {
+    const container = wrapper.querySelector('.category-track-container');
+    const track = wrapper.querySelector('.category-track');
+    const prevBtn = wrapper.querySelector('.cat-prev-btn');
+    const nextBtn = wrapper.querySelector('.cat-next-btn');
+    const dotsContainer = wrapper.querySelector('.category-slider-dots');
 
-    displayedProducts = category === 'all' 
-      ? window.marbleProducts 
-      : window.marbleProducts.filter(p => p.category === category);
+    if (!container || !track) return;
 
-    // تأثير اختفاء سلس ثم ظهور
-    productsTrack.style.opacity = '0';
-    productsTrack.style.transform = 'scale(0.98)';
+    const getCardMetrics = () => {
+      const card = track.querySelector('.product-card');
+      const gap = 32; // 2rem
+      return card ? card.offsetWidth + gap : 360;
+    };
 
-    setTimeout(() => {
-      productsTrack.innerHTML = displayedProducts.map(p => createProductCardHTML(p)).join('');
-      productsTrack.style.opacity = '1';
-      productsTrack.style.transform = 'scale(1)';
-
-      // إعادة ضبط التمرير للبداية
-      if (productsTrackContainer) {
-        productsTrackContainer.scrollLeft = 0;
-      }
-
-      setupModalButtons();
-      renderSliderDots();
-    }, 220);
-  }
-
-  // نقاط السلايدر (Pagination Dots)
-  function renderSliderDots() {
-    if (!sliderDotsContainer || !productsTrackContainer) return;
-    sliderDotsContainer.innerHTML = '';
-    const cards = productsTrack.querySelectorAll('.product-card');
-    if (!cards.length) return;
-
-    // حساب عدد الصفحات التقريبي
-    const cardWidth = cards[0].offsetWidth + 28;
-    const visibleCards = Math.max(1, Math.round(productsTrackContainer.offsetWidth / cardWidth));
-    const totalPages = Math.max(1, cards.length - visibleCards + 1);
-
-    if (totalPages <= 1) {
-      return;
-    }
-
-    for (let i = 0; i < totalPages; i++) {
-      const dot = document.createElement('span');
-      dot.className = `slider-dot ${i === 0 ? 'active' : ''}`;
-      dot.addEventListener('click', () => {
-        // باللغة العربية (RTL): التمرير لليمين/اليسار
-        const scrollAmount = i * cardWidth;
-        // مراعاة سلوك RTL في المتصفحات
-        const isRtlNegative = productsTrackContainer.scrollLeft < 0;
-        productsTrackContainer.scrollTo({
-          left: isRtlNegative ? -scrollAmount : scrollAmount,
-          behavior: 'smooth'
-        });
-        updateActiveDot(i);
-      });
-      sliderDotsContainer.appendChild(dot);
-    }
-  }
-
-  function updateActiveDot(activeIndex) {
-    if (!sliderDotsContainer) return;
-    const dots = sliderDotsContainer.querySelectorAll('.slider-dot');
-    dots.forEach((dot, idx) => {
-      dot.classList.toggle('active', idx === activeIndex);
-    });
-  }
-
-  // تحكم الأسهم في السلايدر مع مراعاة اتجاه الـ RTL
-  if (sliderPrevBtn && productsTrackContainer) {
-    sliderPrevBtn.addEventListener('click', () => {
-      const scrollStep = productsTrackContainer.offsetWidth * 0.75;
-      productsTrackContainer.scrollBy({ left: scrollStep, behavior: 'smooth' });
-    });
-  }
-
-  if (sliderNextBtn && productsTrackContainer) {
-    sliderNextBtn.addEventListener('click', () => {
-      const scrollStep = productsTrackContainer.offsetWidth * 0.75;
-      productsTrackContainer.scrollBy({ left: -scrollStep, behavior: 'smooth' });
-    });
-  }
-
-  // دعم السحب بالماوس (Mouse Drag / Swipe)
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-
-  if (productsTrackContainer) {
-    productsTrackContainer.addEventListener('mousedown', (e) => {
-      isDown = true;
-      productsTrackContainer.classList.add('active-drag');
-      startX = e.pageX - productsTrackContainer.offsetLeft;
-      scrollLeft = productsTrackContainer.scrollLeft;
-    });
-
-    productsTrackContainer.addEventListener('mouseleave', () => {
-      isDown = false;
-      productsTrackContainer.classList.remove('active-drag');
-    });
-
-    productsTrackContainer.addEventListener('mouseup', () => {
-      isDown = false;
-      productsTrackContainer.classList.remove('active-drag');
-    });
-
-    productsTrackContainer.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - productsTrackContainer.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      productsTrackContainer.scrollLeft = scrollLeft - walk;
-    });
-
-    // تحديث النقطة النشطة عند التمرير
-    productsTrackContainer.addEventListener('scroll', () => {
-      const cards = productsTrack.querySelectorAll('.product-card');
+    const renderDots = () => {
+      if (!dotsContainer) return;
+      dotsContainer.innerHTML = '';
+      const cards = track.querySelectorAll('.product-card');
       if (!cards.length) return;
-      const cardWidth = cards[0].offsetWidth + 28;
-      const currentScroll = Math.abs(productsTrackContainer.scrollLeft);
-      const currentPage = Math.round(currentScroll / cardWidth);
+      const step = getCardMetrics();
+      const visible = Math.max(1, Math.round(container.offsetWidth / step));
+      const totalPages = Math.max(1, cards.length - visible + 1);
+
+      if (totalPages <= 1) return;
+
+      for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('span');
+        dot.className = `category-slider-dot ${i === 0 ? 'active' : ''}`;
+        dot.addEventListener('click', () => {
+          const scrollAmount = i * step;
+          const isRtlNegative = container.scrollLeft < 0;
+          container.scrollTo({
+            left: isRtlNegative ? -scrollAmount : scrollAmount,
+            behavior: 'smooth'
+          });
+          updateActiveDot(i);
+        });
+        dotsContainer.appendChild(dot);
+      }
+    };
+
+    const updateActiveDot = (activeIndex) => {
+      if (!dotsContainer) return;
+      const dots = dotsContainer.querySelectorAll('.category-slider-dot');
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === activeIndex);
+      });
+    };
+
+    // في RTL: السهم اليمين يرجع للخلف واليسار يتقدم
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        const step = container.offsetWidth * 0.75;
+        container.scrollBy({ left: step, behavior: 'smooth' });
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        const step = container.offsetWidth * 0.75;
+        container.scrollBy({ left: -step, behavior: 'smooth' });
+      });
+    }
+
+    container.addEventListener('scroll', () => {
+      const step = getCardMetrics();
+      const currentScroll = Math.abs(container.scrollLeft);
+      const currentPage = Math.round(currentScroll / step);
       updateActiveDot(currentPage);
     }, { passive: true });
 
-    // التأكد من أن التمرير العمودي بعجلة الماوس يمر بحرية لتمرير الصفحة ولا يعلق داخل السلايدر
-    productsTrackContainer.addEventListener('wheel', (e) => {
+    // تمرير عمودي انسيابي بدون اعتراض عجلة الماوس
+    container.addEventListener('wheel', (e) => {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        // السماح للتمرير العمودي بالتدفق الطبيعي للنافذة ومحرك Lenis
         return;
       }
     }, { passive: true });
+
+    // دعم السحب والإفلات بالماوس
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    container.addEventListener('mousedown', (e) => {
+      isDown = true;
+      container.classList.add('active-drag');
+      startX = e.pageX - container.offsetLeft;
+      scrollLeft = container.scrollLeft;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      isDown = false;
+      container.classList.remove('active-drag');
+    });
+
+    container.addEventListener('mouseup', () => {
+      isDown = false;
+      container.classList.remove('active-drag');
+    });
+
+    container.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      container.scrollLeft = scrollLeft - walk;
+    });
+
+    renderDots();
+    window.addEventListener('resize', () => {
+      setTimeout(renderDots, 250);
+    });
   }
 
-  // تشغيل تلقائي بطيء (Slow Autoplay) يتوقف عند الإشارة
-  let autoplayTimer = null;
-  const startAutoplay = () => {
-    autoplayTimer = setInterval(() => {
-      if (!productsTrackContainer) return;
-      const maxScroll = productsTrackContainer.scrollWidth - productsTrackContainer.clientWidth;
-      const currentScroll = Math.abs(productsTrackContainer.scrollLeft);
-      const step = productsTrackContainer.offsetWidth * 0.75;
+  // دالة بناء وعرض كتل الفئات الرئيسية
+  function renderCategoryBlocks() {
+    if (!categoryBlocksContainer || !window.marbleProducts) return;
 
-      if (currentScroll + step >= maxScroll - 20) {
-        productsTrackContainer.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        productsTrackContainer.scrollBy({ left: -step, behavior: 'smooth' });
+    // استخراج الفئات المتوفرة فعلياً في المنتجات
+    const activeCats = [];
+    window.marbleProducts.forEach(p => {
+      if (p.category && !activeCats.includes(p.category)) {
+        activeCats.push(p.category);
       }
-    }, 5500);
-  };
+    });
 
-  const stopAutoplay = () => {
-    if (autoplayTimer) clearInterval(autoplayTimer);
-  };
+    // ترتيب الفئات: المغاسل أولاً ثم الطاولات
+    activeCats.sort((a, b) => {
+      const orderA = categoryMetadata[a] ? categoryMetadata[a].order : 99;
+      const orderB = categoryMetadata[b] ? categoryMetadata[b].order : 99;
+      return orderA - orderB;
+    });
 
-  if (productsTrackContainer) {
-    startAutoplay();
-    productsTrackContainer.addEventListener('mouseenter', stopAutoplay);
-    productsTrackContainer.addEventListener('mouseleave', startAutoplay);
-    productsTrackContainer.addEventListener('touchstart', stopAutoplay, { passive: true });
-    productsTrackContainer.addEventListener('touchend', startAutoplay, { passive: true });
+    let html = '';
+
+    activeCats.forEach(catKey => {
+      const prods = window.marbleProducts.filter(p => p.category === catKey);
+      if (!prods.length) return;
+
+      const meta = categoryMetadata[catKey] || {
+        name: catKey === 'sinks' ? 'المغاسل والأحواض الرخامية' : (catKey === 'tables' ? 'طاولات وكاونترات حسب الطلب' : catKey),
+        desc: 'تصاميم حصرية تنفذ بالمقاسات والخامات والمواصفات حسب رغبة العميل.',
+        unit: 'تصاميم'
+      };
+
+      const countText = `${prods.length} ${meta.unit || 'تصاميم'}`;
+      const isSlider = prods.length > 6;
+      const cardsHTML = prods.map(p => createProductCardHTML(p)).join('');
+
+      html += `
+        <div class="category-block" data-category="${catKey}">
+          <div class="category-header">
+            <div class="category-title-wrap">
+              <h3 class="category-title">${meta.name}</h3>
+              <span class="category-count-chip">${countText}</span>
+            </div>
+            <div class="category-line"></div>
+            <p class="category-desc">${meta.desc}</p>
+          </div>
+
+          ${isSlider ? `
+            <div class="category-slider-wrapper" id="sliderWrapper_${catKey}">
+              <div class="category-track-container" id="sliderContainer_${catKey}">
+                <div class="category-track">
+                  ${cardsHTML}
+                </div>
+              </div>
+              <div class="category-slider-controls">
+                <div class="category-slider-arrows">
+                  <button type="button" class="category-slider-arrow-btn cat-prev-btn" aria-label="السابق (يمين)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+                  <button type="button" class="category-slider-arrow-btn cat-next-btn" aria-label="التالي (يسار)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                  </button>
+                </div>
+                <div class="category-slider-dots" id="dots_${catKey}"></div>
+              </div>
+            </div>
+          ` : `
+            <div class="category-products-grid">
+              ${cardsHTML}
+            </div>
+          `}
+        </div>
+      `;
+    });
+
+    categoryBlocksContainer.innerHTML = html;
+
+    // تفعيل السلايدرات للفئات ذات السلايدر
+    activeCats.forEach(catKey => {
+      const prods = window.marbleProducts.filter(p => p.category === catKey);
+      if (prods.length > 6) {
+        const wrapper = document.getElementById(`sliderWrapper_${catKey}`);
+        if (wrapper) {
+          initCategorySlider(wrapper, catKey);
+        }
+      }
+    });
+
+    // ربط بطاقات المنتجات بالنافذة المنبثقة
+    setupProductCardInteractions();
   }
 
-  // تهيئة تبويبات التصفية والرندرة الأولية للمنتجات
-  renderFilterTabs();
-  renderProducts('all');
+  // تفعيل النقر على البطاقة والتفاصيل لفتح النافذة
+  function setupProductCardInteractions() {
+    if (!categoryBlocksContainer) return;
+    const cards = categoryBlocksContainer.querySelectorAll('.product-card');
+    cards.forEach(card => {
+      const prodId = parseInt(card.getAttribute('data-id'), 10);
+      const product = window.marbleProducts.find(p => p.id === prodId);
+      if (!product) return;
+
+      // فتح النافذة عند النقر على البطاقة أو زر التفاصيل (مع استثناء زر الواتساب)
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.btn-product-quote')) {
+          return; // السماح بفتح رابط الواتساب مباشرة
+        }
+        openProductModal(product);
+      });
+    });
+  }
+
+  // استدعاء رندرة كتل الفئات الرئيسية
+  renderCategoryBlocks();
 
   // --------------------------------------------------------------------------
   // 11. نافذة تفاصيل المنتج (Product Details Modal)

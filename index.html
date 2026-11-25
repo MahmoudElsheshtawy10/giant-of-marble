@@ -521,36 +521,9 @@
           </p>
         </div>
 
-        <!-- أزرار التصفية (Filter Tabs) - تولد ديناميكياً من الفئات الموجودة فعلياً في products.js -->
-        <div class="filter-tabs" id="filterTabsContainer"></div>
-
-        <!-- حاوية السلايدر المتطورة -->
-        <div class="products-slider-wrapper">
-          <div class="products-track-container" id="productsSliderContainer">
-            <div class="products-track" id="productsTrack">
-              <!-- يتم توليد البطاقات ديناميكياً من products.js -->
-            </div>
-          </div>
-
-          <!-- عناصر التحكم بالسلايدر (أزرار ونقاط معكوسة للـ RTL) -->
-          <div class="slider-controls">
-            <!-- في الـ RTL: السهم اليمين يرجع للخلف واليسار يتقدم -->
-            <div class="slider-arrows">
-              <button type="button" class="slider-arrow-btn" id="sliderPrevBtn" aria-label="المنتجات السابقة (يمين)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
-              <button type="button" class="slider-arrow-btn" id="sliderNextBtn" aria-label="المنتجات التالية (يسار)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-              </button>
-            </div>
-
-            <!-- نقاط التقدم -->
-            <div class="slider-dots" id="sliderDots"></div>
-          </div>
+        <!-- حاوية كتل الفئات الرئيسية (المغاسل أولاً ثم الطاولات) - تولد ديناميكياً من products.js -->
+        <div class="category-blocks-container" id="categoryBlocksContainer">
+          <!-- يتم توليد كتلتي المغاسل والطاولات مع المنتجات برمجياً -->
         </div>
       </div>
     </section>
@@ -570,55 +543,55 @@
         <div class="gallery-grid">
           <!-- نموذج 1 -->
           <div class="gallery-item span-2" data-full-image="assets/products/prod-1.jpg">
-            <img src="assets/products/prod-1.jpg" alt="مغسلة بيضاء معلقة بحوضين ذهبيين ورف سفلي" loading="lazy" />
+            <img src="assets/products/prod-1.jpg" alt="مغسلة معلقة رخام أسود معرق مع مرآة دائرية مضيئة" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">مغاسل رخامية</span>
-              <h3 class="gallery-title">مغسلة بيضاء معلقة بحوضين ذهبيين ورف سفلي</h3>
+              <span class="gallery-tag">مغاسل معلقة</span>
+              <h3 class="gallery-title">مغسلة معلقة رخام أسود معرق مع مرآة دائرية مضيئة</h3>
             </div>
           </div>
 
           <!-- نموذج 2 -->
           <div class="gallery-item" data-full-image="assets/products/prod-2.jpg">
-            <img src="assets/products/prod-2.jpg" alt="مغسلة ترافرتين رمادي بإنارة LED دافئة" loading="lazy" />
+            <img src="assets/products/prod-2.jpg" alt="كاونتر وبار كافيهات رخام أبيض بتطعيمات ذهبية" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">مغاسل ترافرتين</span>
-              <h3 class="gallery-title">مغسلة ترافرتين رمادي معلقة بإنارة LED دافئة</h3>
+              <span class="gallery-tag">كاونترات تجارية</span>
+              <h3 class="gallery-title">كاونتر وبار كافيهات رخام أبيض بتطعيمات ذهبية</h3>
             </div>
           </div>
 
           <!-- نموذج 3 -->
           <div class="gallery-item" data-full-image="assets/products/prod-3.jpg">
-            <img src="assets/products/prod-3.jpg" alt="مغسلة عمودية مستقلة بتطعيم مضيء" loading="lazy" />
+            <img src="assets/products/prod-3.jpg" alt="طاولة طعام دائرية رخام أبيض بقاعدة أسطوانية مضلعة" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">مغاسل قائمة</span>
-              <h3 class="gallery-title">مغسلة عمودية مستقلة بتطعيم أسود مضيء</h3>
+              <span class="gallery-tag">طاولات طعام</span>
+              <h3 class="gallery-title">طاولة طعام دائرية رخام أبيض بقاعدة أسطوانية مضلعة</h3>
             </div>
           </div>
 
           <!-- نموذج 4 -->
           <div class="gallery-item" data-full-image="assets/products/prod-4.jpg">
-            <img src="assets/products/prod-4.jpg" alt="كاونتر مغسلة بتطعيم متعرج وحوضين باللون الأسود" loading="lazy" />
+            <img src="assets/products/prod-4.jpg" alt="مغسلة مزدوجة معلقة رخام أبيض بحوضين مدمجين ورف سفلي" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">مغاسل مودرن</span>
-              <h3 class="gallery-title">كاونتر مغسلة رمادي بتطعيم هندسي وحوضين باللون الأسود</h3>
+              <span class="gallery-tag">مغاسل فندقية</span>
+              <h3 class="gallery-title">مغسلة مزدوجة معلقة رخام أبيض بحوضين مدمجين ورف سفلي</h3>
             </div>
           </div>
 
           <!-- نموذج 5 -->
           <div class="gallery-item span-2" data-full-image="assets/products/prod-5.jpg">
-            <img src="assets/products/prod-5.jpg" alt="طقم طاولتي ضيافة رخام عنابي داكن منخفض" loading="lazy" />
+            <img src="assets/products/prod-5.jpg" alt="مغسلة مزدوجة رمادية معلقة بواجهة مضلعة وإضاءة LED" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">طاولات رخام</span>
-              <h3 class="gallery-title">طقم طاولتي ضيافة من الرخام العنابي الداكن المصقول</h3>
+              <span class="gallery-tag">مغاسل مودرن</span>
+              <h3 class="gallery-title">مغسلة مزدوجة رمادية معلقة بواجهة مضلعة وإضاءة LED</h3>
             </div>
           </div>
 
           <!-- نموذج 6 -->
           <div class="gallery-item" data-full-image="assets/products/prod-6.jpg">
-            <img src="assets/products/prod-6.jpg" alt="طاولة طعام بيضاوية من الترافرتين الفضي" loading="lazy" />
+            <img src="assets/products/prod-6.jpg" alt="مغسلة ترافرتين رمادي معلقة بتصميم متدرج وإضاءة مخفية" loading="lazy" />
             <div class="gallery-overlay">
-              <span class="gallery-tag">طاولات ترافرتين</span>
-              <h3 class="gallery-title">طاولة طعام بيضاوية من الترافرتين الفضي بقاعدة مضلعة</h3>
+              <span class="gallery-tag">مغاسل ترافرتين</span>
+              <h3 class="gallery-title">مغسلة ترافرتين رمادي معلقة بتصميم متدرج وإضاءة مخفية</h3>
             </div>
           </div>
         </div>
